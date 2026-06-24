@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 // 呼叫 Flask AI 偵測服務（/predict），回傳原始結果。
 export async function sendImageUrlToPythonService(text, imageUrls) {
     try {
-        const response = await fetch('http://localhost:5000/predict', {
+        const response = await fetch('http://127.0.0.1:5000/predict', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text, image_urls: imageUrls }),
