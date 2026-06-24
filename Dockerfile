@@ -20,12 +20,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-# ---- Python 依賴（Flask AI）+ 模型下載工具 ----
-# 用 --no-deps 安裝完整 freeze：requirements.txt 已含所有相依，且包含一組
-# 「paddle 要 protobuf 3.20 / google 套件宣告要 protobuf 4」的衝突組合（本機實測可運作，
-# 只是 pip 解析器會拒絕同時安裝）。--no-deps 原封不動裝回這組版本、不做解析，即可避開衝突。
+# ---- Python 依賴（Flask AI）----
 COPY backend/python/requirements.txt backend/python/requirements.txt
-RUN pip install --no-deps -r backend/python/requirements.txt
+# 1) torch 系列裝「CPU 版」：HF 免費 Space 無 GPU；PyPI 的 Linux torch 預設是 CUDA 版會缺 libcudart。
+RUN pip install --no-deps torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 \
+      --index-url https://download.pytorch.org/whl/cpu
+# 2) 其餘依賴用 --no-deps 裝完整 freeze（已排除 torch 系列）：freeze 含一組
+#    「paddle 要 protobuf 3.20 / google 套件宣告要 protobuf 4」的衝突組合（本機實測可運作，
+#    只是 pip 解析器會拒絕同時安裝）。--no-deps 原封不動裝回、不做解析，即可避開衝突。
+RUN grep -ivE '^(torch|torchvision|torchaudio)==' backend/python/requirements.txt > /tmp/req.txt && \
+    pip install --no-deps -r /tmp/req.txt
 
 # 預先快取 bert-base-chinese（避免執行期才下載）
 RUN python -c "from transformers import BertModel, BertTokenizer; BertModel.from_pretrained('bert-base-chinese'); BertTokenizer.from_pretrained('bert-base-chinese')"
