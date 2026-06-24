@@ -1,0 +1,31 @@
+# 依賴（image 內重新安裝）
+**/node_modules
+**/venv
+**/newenv
+
+# 建置產物
+backend/.next
+frontend/dist
+
+# Python 快取
+**/__pycache__
+*.pyc
+
+# 大型模型（image build 時從 HF 模型庫下載，不需從本機帶入）
+backend/python/bert
+backend/python/model
+backend/python/emomodel
+*.pth
+*.safetensors
+
+# 金鑰（執行期由 HF Secrets 提供，勿進 image）
+.env
+**/.env
+credentials
+backend/config
+
+# 不需放進服務的東西
+.git
+mobile
+docs
+backend/uploads/*

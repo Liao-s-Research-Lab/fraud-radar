@@ -81,10 +81,11 @@ function Navbar({setIsLogoutModalOpen}) {
               </div>
 
               <div className={styles.navbarAdminLink}>
-                <div 
-                  className={`${styles.navbarAdminAnchor} ${isActive("commonfraud")}`} 
+                <div
+                  className={`${styles.navbarAdminAnchor} ${isActive("commonFraudBox")}`}
                   onClick={() => {
-                    setIsLogoutModalOpen(true);
+                    setSelectedLink("commonFraudBox");
+                    navigate("/#commonFraudBox");
                     setIsMobileMenuOpen(!isMobileMenuOpen);
                   }}
                 >
