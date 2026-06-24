@@ -21,8 +21,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # ---- Python 依賴（Flask AI）+ 模型下載工具 ----
+# 用 --no-deps 安裝完整 freeze：requirements.txt 已含所有相依，且包含一組
+# 「paddle 要 protobuf 3.20 / google 套件宣告要 protobuf 4」的衝突組合（本機實測可運作，
+# 只是 pip 解析器會拒絕同時安裝）。--no-deps 原封不動裝回這組版本、不做解析，即可避開衝突。
 COPY backend/python/requirements.txt backend/python/requirements.txt
-RUN pip install -r backend/python/requirements.txt huggingface_hub
+RUN pip install --no-deps -r backend/python/requirements.txt
 
 # 預先快取 bert-base-chinese（避免執行期才下載）
 RUN python -c "from transformers import BertModel, BertTokenizer; BertModel.from_pretrained('bert-base-chinese'); BertTokenizer.from_pretrained('bert-base-chinese')"
