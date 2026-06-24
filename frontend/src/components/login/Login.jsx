@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import welcome_user from '../../images/welcome_user.png';
 import user from '../../images/user.png';
 import padlock from '../../images/padlock.png';
-import { collection, query, where, getDocs } from 'firebase/firestore'; 
-import { db } from '../../firebase'; 
+import { signInWithCustomToken } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -20,29 +20,25 @@ function Login() {
   };
 
   const handleLogin = async () => {
-    setError({ usernameError: '', passwordError: '' }); 
+    setError({ usernameError: '', passwordError: '' });
     try {
-      const queryDocumentID = query(collection(db, 'Management'), where('Account', '==', username));
-      const querySnapshot = await getDocs(queryDocumentID);
-      
-      if (!querySnapshot.empty) {
-        
-        const userDoc = querySnapshot.docs[0];
-        const userData = userDoc.data();
-    
-        if (userData.Password === password) {
-          console.log("登入成功:", userData);
-          sessionStorage.setItem('username', username); 
-          navigate('/admin'); 
-        } else {
-          setError(prev => ({ ...prev, passwordError: '密碼錯誤' })); 
-        }
-      } else {
-        setError(prev => ({ ...prev, usernameError: '帳號不存在' }));
+      // 後端驗證帳密（查 Management、比對在伺服器端，密碼不外洩），成功會回傳帶 admin 權限的 token
+      const res = await fetch('/api/admin-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ account: username, password }),
+      });
+      if (!res.ok) {
+        setError(prev => ({ ...prev, passwordError: '帳號或密碼錯誤' }));
+        return;
       }
+      const { token } = await res.json();
+      // 用 custom token 登入 Firebase Auth → 取得帶 admin claim 的登入狀態，規則才認得
+      await signInWithCustomToken(auth, token);
+      navigate('/admin');
     } catch (err) {
-      console.error('Firestore 讀取錯誤:', err);
-      setError({ usernameError: '登入過程中發生錯誤，請稍後再試', passwordError: '' });
+      console.error('登入失敗:', err);
+      setError(prev => ({ ...prev, passwordError: '登入失敗，請稍後再試' }));
     }
   };
 
@@ -64,8 +60,8 @@ function Login() {
           <form className="login" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}> 
             <div className="email" style={{ marginBottom: error.usernameError ? '0' : '20px' }}>
               <input 
-                type="text" 
-                placeholder="帳號:" 
+                type="text"
+                placeholder="帳號:"
                 value={username} 
                 onChange={(e) => setUsername(e.target.value)} 
                 onDragOver={ handleDragOver }

@@ -1,4 +1,5 @@
 import puppeteer from 'puppeteer';
+import { assertPublicUrl } from './security';
 
 // 共用一個 headless 瀏覽器實例，避免每次偵測都重啟 Chrome（每次啟動約 1~3 秒）。
 // 中斷時自動重啟。
@@ -22,9 +23,8 @@ const MAX_OCR_IMAGES = 3;
 
 // 以無頭瀏覽器抓取網址的文字內容與圖片連結（給 OCR 用）。
 export async function UrlContent(url) {
-    if (!/^https?:\/\//.test(url)) {
-        url = `https://${url}`; // 補全爲 https://
-    }
+    // SSRF 防護 + 補全 scheme：不安全（localhost/內網/私有 IP）會丟出錯誤
+    url = await assertPublicUrl(url);
     console.log(`處理 URL: ${url}`);
 
     const browser = await getBrowser();

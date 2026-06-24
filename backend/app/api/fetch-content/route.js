@@ -8,6 +8,7 @@ import path from 'path';
 import { UrlContent } from '../../lib/browser';
 import { sendImageUrlToPythonService, processPythonResult } from '../../lib/pythonService';
 import { createResponse, corsHeaders } from '../../lib/http';
+import { getClientIp, rateLimit, MAX_FILES, MAX_FILE_BYTES } from '../../lib/security';
 
 if (!admin.apps.length) {
     admin.initializeApp({
@@ -50,6 +51,15 @@ export async function POST(request) {
 
     try {
 
+        // 速率限制：每個 IP 每分鐘最多 20 次，擋掉惡意洗 API（灌爆 Firestore / 燒 Gemini / DoS）
+        const ip = getClientIp(request);
+        if (!rateLimit(ip)) {
+            return NextResponse.json(
+                { success: false, message: '請求過於頻繁，請稍後再試。' },
+                { status: 429 }
+            );
+        }
+
         const contentType = request.headers.get('content-type');
         console.log(contentType);
 
@@ -87,9 +97,13 @@ export async function POST(request) {
                 if (containsUrl) {
                     console.log('處理文本信息', text);
                     for (const url of urls) {
-                        const result = await UrlContent(url); // 每個 URL 傳入 scrapeUrlContent
-                        allContent += result.content + '\n';
-                        allImageUrls = allImageUrls.concat(result.imageUrls);  // 合併圖片鏈接數組
+                        try {
+                            const result = await UrlContent(url); // 每個 URL 傳入 scrapeUrlContent
+                            allContent += result.content + '\n';
+                            allImageUrls = allImageUrls.concat(result.imageUrls);  // 合併圖片鏈接數組
+                        } catch (e) {
+                            console.warn(`略過無法抓取的網址 ${url}: ${e.message}`); // 例如被 SSRF 防護擋下
+                        }
                     }
                     pythonResult = await sendImageUrlToPythonService(allContent, allImageUrls);
 
@@ -120,6 +134,17 @@ export async function POST(request) {
             const formData = await request.formData();
             const from = formData.get('from');         // 拿來源
             const files = formData.getAll('files[]'); // 取得所有檔案
+
+            // 上傳限制：擋掉「大量／超大檔」耗光 CPU 與磁碟
+            if (files.length > MAX_FILES) {
+                return createResponse(false, {}, `檔案數量過多（最多 ${MAX_FILES} 個）。`);
+            }
+            for (const f of files) {
+                if (f && typeof f.size === 'number' && f.size > MAX_FILE_BYTES) {
+                    return createResponse(false, {}, `檔案過大（單檔上限 ${MAX_FILE_BYTES / 1024 / 1024}MB）。`);
+                }
+            }
+
             let uploadedFileBuffer, uploadedFileName, mimeType;
             let filePaths = []; // 用來儲存所有圖片的路徑
 
