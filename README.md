@@ -112,7 +112,6 @@
 | 資料庫 / 雲端 | Firebase Firestore、Firebase Admin SDK |
 
 ---
-
 ## 🚀 快速開始
 
 詳細的安裝、啟動、模型與金鑰設定步驟請見 **[SETUP.md](SETUP.md)**。

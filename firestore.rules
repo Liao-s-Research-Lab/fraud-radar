@@ -1,0 +1,72 @@
+rules_version = '2';
+
+// 騙局雷達 Firestore 安全規則
+// 重點：後端（Next.js / Flask）使用 Firebase Admin SDK，會「完全繞過」這些規則，
+//       因此偵測流程不受影響；以下規則只規範「瀏覽器端」（Firebase Web SDK）的直接存取。
+//
+// 部署：Firebase 主控台 → Firestore Database → 規則 → 貼上本檔內容 → 發布。
+//
+// admin 判定靠自訂宣告（custom claim）request.auth.token.admin == true，
+// 設定方式見 SECURITY-SETUP.md。
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() { return request.auth != null && request.auth.token.admin == true; }
+
+    // ── 公開可讀的內容（任何人可讀，只有管理員能改）──
+    match /Statistics/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /KeywordFrequency/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /ShortVideo/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /CommonSkill/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ── 詐騙關鍵字庫：伺服器以 Admin SDK 存取（繞過規則）；前端僅管理員可讀寫 ──
+    match /FraudDefine/{doc} {
+      allow read, write: if isAdmin();
+    }
+
+    // ── 使用者回報：登入者（含匿名）可「新增」；僅管理員可讀／改／刪 ──
+    match /Report/{doc} {
+      allow create: if isSignedIn();
+      allow read, update, delete: if isAdmin();
+    }
+
+    // ── 偵測結果：由伺服器 Admin SDK 寫入。
+    //    一般使用者只能對既有文件「加星評分」（只准改 Stars 欄位）；管理員可讀／刪。──
+    match /Outcome/{doc} {
+      allow read, delete: if isAdmin();
+      allow update: if isAdmin() ||
+        (isSignedIn() &&
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['Stars']));
+    }
+
+    // ── 測驗分數：登入者可讀寫（低風險，僅影響測驗統計）──
+    match /QuizScore/{document=**} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // ── 管理員集合：前端一律禁止（登入已改用 Firebase Auth，不再從這裡讀密碼）──
+    match /Management/{doc} {
+      allow read, write: if isAdmin();
+    }
+
+    // ── 其餘未列出的集合：預設全部禁止 ──
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './Admin.module.css';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged, getIdTokenResult, signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
 import { SignOutAltIcon } from '@patternfly/react-icons';
 import { motion } from 'framer-motion';
 import Navbar from '../navbar/Navbar';
@@ -15,6 +17,7 @@ export const MultipleFileUploadBasic = () => {
   const [activeTab, setActiveTab] = useState("file");
   const navigate = useNavigate();
   const alertShownRef = useRef(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // 計算 Tab 樣式位置
   const getTabStyle = () => {
@@ -31,19 +34,31 @@ export const MultipleFileUploadBasic = () => {
   };
   
 
-  // 檢查登入狀態
+  // 檢查登入狀態：必須是已登入且具備管理員權限（custom claim）的 Firebase Auth 使用者
   useEffect(() => {
-    const userAuthenticated = sessionStorage.getItem('username');
-    if (!userAuthenticated && !alertShownRef.current) {
-      alert('請先登入帳號及密碼');
-      alertShownRef.current = true; 
-      navigate('/login'); 
-    }
-  }, [navigate]); 
+    const unsub = onAuthStateChanged(auth, async (user) => {
+      let admin = false;
+      if (user) {
+        try {
+          const token = await getIdTokenResult(user);
+          admin = token.claims.admin === true;
+        } catch (e) {
+          admin = false;
+        }
+      }
+      setIsAdmin(admin);
+      if (!admin && !alertShownRef.current) {
+        alert('請先以管理員帳號登入');
+        alertShownRef.current = true;
+        navigate('/login');
+      }
+    });
+    return () => unsub();
+  }, [navigate]);
 
-  const handleLogout = () => {
-    sessionStorage.clear();
-    alertShownRef.current = false; 
+  const handleLogout = async () => {
+    await signOut(auth);
+    alertShownRef.current = false;
     navigate("/login");
   };
 
@@ -51,12 +66,10 @@ export const MultipleFileUploadBasic = () => {
     setIsLogoutModalOpen(false);
   };
 
-  const userAuthenticated = sessionStorage.getItem('username');
-
   return (
     <>
       <div className={styles.adminRoot}>
-        {userAuthenticated && (
+        {isAdmin && (
           <Navbar setIsLogoutModalOpen={setIsLogoutModalOpen}/>
         )}
 
