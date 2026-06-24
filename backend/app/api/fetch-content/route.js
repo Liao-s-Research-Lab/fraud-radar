@@ -9,12 +9,6 @@ import { sendImageUrlToPythonService, processPythonResult } from '../../lib/pyth
 import { createResponse, corsHeaders } from '../../lib/http';
 import { getClientIp, rateLimit, MAX_FILES, MAX_FILE_BYTES } from '../../lib/security';
 
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-};
-
 async function readFileContent(buffer) {
     return buffer.toString('utf-8');
 }
