@@ -1,20 +1,13 @@
 import { NextResponse } from 'next/server';
-import admin from 'firebase-admin';
-import serviceAccount from '../../../config/dayofftest1-firebase-adminsdk-xfpl4-f64d9dc336.json';
 import fs from 'fs';
 import mime from 'mime-types';
 import { spawn } from 'child_process';
 import path from 'path';
+import { getDb, admin } from '../../lib/firebaseDayoff';
 import { UrlContent } from '../../lib/browser';
 import { sendImageUrlToPythonService, processPythonResult } from '../../lib/pythonService';
 import { createResponse, corsHeaders } from '../../lib/http';
 import { getClientIp, rateLimit, MAX_FILES, MAX_FILE_BYTES } from '../../lib/security';
-
-if (!admin.apps.length) {
-    admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-    });
-}
 
 export const config = {
     api: {
@@ -22,15 +15,13 @@ export const config = {
     },
 };
 
-const db = admin.firestore();
-
 async function readFileContent(buffer) {
     return buffer.toString('utf-8');
 }
 
 async function saveToFirestore(detectionType, content, pythonResult) {
     console.log(pythonResult); // 現在應該輸出實際的數據而不是 Promise
-    const docRef = await db.collection('Outcome').add({
+    const docRef = await getDb().collection('Outcome').add({
         DetectionType: detectionType,
         Content: content,
         PythonResult: pythonResult,

@@ -1,16 +1,6 @@
 import { NextResponse } from 'next/server';
-import admin from 'firebase-admin';
-import serviceAccount from '../../../config/dayofftest1-firebase-adminsdk-xfpl4-f64d9dc336.json';
+import { getDb, getAuth } from '../../lib/firebaseDayoff';
 import { getClientIp, rateLimit } from '../../lib/security';
-
-// 用具名 app 連 dayofftest1（前端 firebase.js 認證的就是這個專案），
-// 避免與其他路由的「預設 app」互相覆蓋。
-const APP_NAME = 'admin-login';
-const app =
-    admin.apps.find((a) => a && a.name === APP_NAME) ||
-    admin.initializeApp({ credential: admin.credential.cert(serviceAccount) }, APP_NAME);
-const db = app.firestore();
-const auth = app.auth();
 
 export async function POST(request) {
     try {
@@ -26,7 +16,7 @@ export async function POST(request) {
         }
 
         // 伺服器端查 Management 並比對密碼（Admin SDK 會繞過安全規則，Management 對前端可全鎖）
-        const snap = await db.collection('Management').where('Account', '==', account).limit(1).get();
+        const snap = await getDb().collection('Management').where('Account', '==', account).limit(1).get();
         if (snap.empty || snap.docs[0].data().Password !== password) {
             // 不分辨「帳號不存在」與「密碼錯誤」，避免洩漏帳號是否存在
             return NextResponse.json({ success: false, message: '帳號或密碼錯誤。' }, { status: 401 });
@@ -34,7 +24,7 @@ export async function POST(request) {
 
         // 驗證通過 → 發一張帶 admin 權限的 Firebase custom token
         const uid = `admin_${snap.docs[0].id}`;
-        const token = await auth.createCustomToken(uid, { admin: true });
+        const token = await getAuth().createCustomToken(uid, { admin: true });
         return NextResponse.json({ success: true, token });
     } catch (error) {
         console.error('admin-login 失敗:', error.message);

@@ -80,7 +80,7 @@ function URLReport() {
           formattedUrl = 'https://' + url;
         }
         
-        const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/api/fetch-content`, {
+        const response = await fetch('/api/fetch-content', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

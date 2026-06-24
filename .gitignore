@@ -39,3 +39,7 @@ backend/config/*.json
 # 系統檔
 .DS_Store
 .expo/
+
+# 未使用的大型示範影片（HF git 不收 >10MB 非 LFS 檔；fraudtest.mp4 有用且小，保留）
+frontend/public/demo.mp4
+frontend/public/demotest.mp4
