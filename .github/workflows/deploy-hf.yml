@@ -1,7 +1,7 @@
 name: Deploy to Hugging Face Space
 
-# 每次 push 到 main → 自動把目前內容推到 HF Space，Space 會重新 build 部署。
-# 需在 GitHub repo 設定一個 secret：HF_TOKEN（見 DEPLOY.md）。
+# 每次 push 到 main → 自動把目前內容上傳到 HF Space，Space 會重新 build 部署。
+# 需在 GitHub repo 設定 secret：HF_TOKEN（HF 寫入權杖）。見 DEPLOY.md。
 on:
   push:
     branches: [main]
@@ -13,17 +13,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 組出 HF 用 README（在最前面加上 Space 標頭）
-        run: cat deploy/hf-readme-header.md README.md > README.hf && mv README.hf README.md
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-      - name: 推送到 Hugging Face Space（單一 commit，不帶歷史，避免歷史大檔）
+      - name: 安裝 huggingface_hub
+        run: pip install -q huggingface_hub
+
+      - name: 上傳到 Hugging Face Space（大檔自動走 LFS）
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           if [ -z "$HF_TOKEN" ]; then echo "未設定 HF_TOKEN secret，跳過自動同步。"; exit 0; fi
-          git config user.email "deploy@github"
-          git config user.name "github-actions"
-          git checkout --orphan hf-deploy
-          git add -A
-          git commit -m "deploy from github"
-          git push --force "https://mintguess:${HF_TOKEN}@huggingface.co/spaces/mintguess/fraud-radar" hf-deploy:main
+          cat deploy/hf-readme-header.md README.md > README.tmp && mv README.tmp README.md
+          python deploy/push_to_space.py
