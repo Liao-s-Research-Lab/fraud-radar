@@ -1,0 +1,140 @@
+.rating-container {
+    display: inline-grid; 
+    height: 420px;
+    width: 100%;
+    grid-template-columns: 1fr 16px 1fr; 
+    grid-template-rows: 1fr 1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+        "first . second"
+        "third third third";
+    overflow-y: scroll;
+    justify-items: center;
+}
+
+.rating-loading {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.container-1{
+    display: flex;
+    width: 100%;
+    padding: 50px 0;
+    border-radius: 10px;
+    background: #fff;
+    row-gap: 30px;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 0px 5px  lightgray;
+    border: 1px solid rgb(222, 226, 230);
+    margin: 0;
+    grid-area: first;
+}
+
+.circular-progress{
+    position: relative;
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    background: conic-gradient(rgb(255, 68, 51) 0deg, green 360deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column
+}
+
+.circular-progress::before{
+    content: "";
+    position: absolute;
+    height: 210px;
+    width: 210px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.progress-value{
+    position: relative;
+    font-size: 40px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0px 0px 1px gray;
+}
+
+.text{
+    position: relative;
+    font-size: 30px;
+    font-weight: 500;
+    color: #606060;
+    text-shadow: 0px 0px 1px gray;
+}
+
+.container-2 {
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: 15px; 
+    grid-area: second;
+}
+
+.card-rating {
+    width: auto; 
+    box-sizing: border-box;
+    border: 1px solid rgb(222, 226, 230);
+    border-radius: 10px;
+}
+
+.rating-ul {
+    margin-bottom: 0;
+}
+
+.prevent {
+    font-size: 20px;
+}
+
+.container-3 {
+    height: 500px;
+    border-radius: 10px;
+    background: #fff;
+    align-items: center;
+    box-shadow: 0px 0px 5px  lightgray;
+    border: 1px solid rgb(222, 226, 230);
+    width: 100%;
+    margin-top: 16px;
+    padding: 16px;
+    grid-area: third;
+}
+
+.container-3-image-title {
+    margin-bottom: 16px;
+    font-size: 20px;
+}
+
+.container-3-title {
+    font-size: 20px;
+}
+
+.container-3-title-url {
+    margin-bottom: 16px;
+}
+
+.play-icon {
+  color: #3abade;
+  margin-left: 3px;
+  margin-bottom: 0.5px;
+  animation: pulse 1.2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

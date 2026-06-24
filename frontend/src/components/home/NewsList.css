@@ -1,0 +1,42 @@
+.news-topic {
+    text-align: center;
+    line-height: 100px;
+    font-weight: 700;
+}
+
+.articles-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto); 
+    gap: 50px; 
+    justify-items: center; 
+    align-items: center;
+    padding: 0 100px 50px 100px;
+    width: 100%;
+}
+
+.article {
+    box-shadow: 5px 5px 5px lightgray;
+    transition: transform 0.75s ease;
+}
+
+.article:hover {
+    box-shadow: 1px 1px 5px gray;
+    transform: scale(0.95)
+}
+
+.news-topic {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .article {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .carousel-item {
+    max-height: 500px;
+    overflow: hidden;
+  }
+  

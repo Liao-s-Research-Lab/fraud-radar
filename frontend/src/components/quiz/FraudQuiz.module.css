@@ -1,0 +1,502 @@
+.gameContainer {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    border: 2px solid #fff;
+    overflow: hidden;
+    color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+.background {
+    background-image: url("/room.jpg");
+    background-size: cover;
+    background-repeat: none;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+}
+
+/* Return Button */
+.returnButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+}
+
+.returnButton button {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+.returnButton button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+
+/* Dialogue Box */
+.dialogueBox {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 80%;
+    height: 25vh;
+    background: linear-gradient(
+        to right, 
+        rgba(0, 0, 0, 0) 0%, 
+        rgba(0, 0, 0, 0.75) 10%,
+        rgba(0, 0, 0, 0.75) 90%, 
+        rgba(0, 0, 0, 0) 100%   
+    );
+    padding: 20px 200px;
+
+    z-index: 1;
+}
+
+.dialogueText {
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 1.5;
+    padding-left: 50px;
+}
+
+.question {
+    position: relative;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 1.5;
+    color: goldenrod;
+    animation: scaleChange 2s ease-in-out infinite;
+}
+
+@keyframes scaleChange {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+
+.content {
+    display: flex;
+    gap: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 85%;
+    z-index: 0;
+}
+
+.characterLeft {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 35%;
+    height: 100%;
+}
+
+.characterLeftImage {
+    filter: brightness(50%);
+    transform: scale(1.05);
+    height: 90%;
+}
+
+.characterRight {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: 35%;
+    height: 100%;
+}
+
+.characterRightImage {
+    filter: brightness(50%);
+    transform: scale(1.05);
+    height: 90%;
+}
+
+.myturn {
+    transform: scale(1.1);
+    filter: brightness(100%);
+    transition: all 1;
+}
+.characterName1,
+.characterName2 {
+    position: relative;
+    background-color: #000000;
+    transform: translateY(-37.5px);
+    font-weight: bold;
+    margin-bottom: 10px;
+    width: 150px;
+    text-align: center;
+    font-size: larger;
+    line-height: 2;
+    border: 1px solid white;
+    border-radius: 15px;
+}
+.characterName2 {
+    margin-left: calc(100vw * 0.8 - 550px);
+}
+
+.backStory {
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 75%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(5, 5, 5, 0.708);
+    color: rgb(255, 255, 255);
+    padding: 30px;
+    z-index: 1;
+}
+
+.kickOff {
+    margin-top: auto;
+}
+
+.kickOff button {
+    background-color: goldenrod; 
+    color: white; 
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 20px; 
+    font-weight: bolder;
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+
+.kickOff button:hover {
+    background-color: rgb(201, 152, 30); 
+}
+
+
+.records {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    height: 65%;
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+    z-index: 3;
+    margin: 0 10px;
+    overflow-y: auto;
+    font-size: large;
+}
+
+.recordsHeader {
+    height: 12.5%;
+    background-color: gray;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.state {
+    margin-left: 10px;
+}
+.records p {
+    margin: 0;
+    font-weight: 500;
+}
+.records p:first-of-type {
+    font-size: 16px;
+    
+}
+.records p:nth-of-type(2) {
+    font-size: 14px;
+    color: lightgray;
+}
+
+.function {
+    display: flex;
+    gap: 20px;
+    margin-left: auto;
+}
+
+.recordsContent {
+    height: 75%;
+    background-color: rgba(191, 191, 191, 0.75);
+    overflow-y: scroll;
+    padding: 0 20px;
+}
+.recordsContent::-webkit-scrollbar {
+    width: 10px;
+}
+.recordsContent::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5) !important; /* 滑塊顏色 */
+    border-radius: 10px !important; /* 滑塊圓角 */
+  }
+  
+  /* 滑塊懸浮時的顏色 */
+  .recordsContent::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.75) !important; /* 滑塊懸浮顏色 */
+  }
+  
+.recordsBottom {
+    position: relative;
+    height: 12.5%;
+    background-color: rgba(191, 191, 191, 0.75);
+    display: flex;
+    padding: 10px 20px;
+    gap: 10px;
+    overflow-x: hidden;
+}
+
+.typingContainer {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 25px;
+    gap: 10px;
+}
+
+.typingContainer > p {
+    color: gray;
+    font-weight: 700;
+    white-space: nowrap; /* 防止換行 */
+    overflow: hidden;    /* 隱藏超出的文字 */
+    text-overflow: ellipsis; /* 用省略號表示被截斷的文字 */
+}
+
+.otherButtonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+
+
+.recordsLeft {
+    position: relative;
+    display: flex;
+    margin: 10px 0;
+    justify-content: flex-start; 
+}
+.recordsLeftText {
+    background-color: rgba(72, 113, 247);
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
+    width: auto;
+}
+.recordsLeftText:hover {
+    cursor: pointer;
+    background-color: rgb(2, 162, 255);
+}
+.recordsLeftText::before {
+    content: '';
+    position: absolute;
+    top: 12.5px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    transform: rotate(90deg) translateX(5px) translateY(22.5px);
+    border-top: 10px solid rgba(72, 113, 247); 
+}
+.recordsLeftText:hover::before {
+    border-top: 10px solid rgb(2, 162, 255);
+}
+
+.recordsRight {
+    position: relative;
+    display: flex;
+    margin: 10px 0;
+    justify-content: flex-end; 
+}
+.recordsRightText {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
+    width: auto;
+}
+.recordsRightText:hover {
+    cursor: pointer;
+    background-color: rgb(221, 221, 221);
+}
+.recordsRightText::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 12.5px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    transform: rotate(270deg) translateX(-5px) translateY(2.5px); 
+    border-top: 10px solid white;
+}
+.recordsRightText:hover::after {
+    border-top: 10px solid rgb(221, 221, 221);
+}
+
+/* 正確答案 */
+.correctAnswer {
+    background-color: green; 
+}
+.correctAnswer:hover {
+    background-color: rgb(5, 173, 86);
+}
+.correctAnswer::before {
+    border-top: 10px solid green;
+}
+.correctAnswer:hover::before {
+    border-top: 10px solid rgb(5, 173, 86);
+}
+/* 錯誤答案 */
+.incorrectAnswer {
+    background-color: red;
+    color: white;
+}
+.incorrectAnswer:hover {
+    background-color: rgb(220, 0, 0);
+}
+.incorrectAnswer::before,
+.incorrectAnswer::after {
+    border-top: 10px solid rgb(255, 28, 28);
+}
+.incorrectAnswer:hover::before,
+.incorrectAnswer:hover::after {
+    border-top: 10px solid rgb(220, 0, 0);
+}
+.options {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    z-index: 0;
+}
+
+.option {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.option:hover {
+    background-color: #ddd;
+}
+
+/* Menu Controls */
+.recordsControls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+    z-index: 0;
+}
+
+.recordsControls button {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+.recordsControls button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.pageTransition {
+    z-index: 150;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.svg,
+.tempbg {
+    width: calc(100vw + 600px);
+    height: 100vh;
+    left: -300px;
+    position: fixed;
+    pointer-events: none;
+}
+
+.temptitle {
+    font-size: 4rem;
+    font-weight: 700;
+    position: absolute;
+}
+
+.nextStage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.nextStage p:nth-child(1) {
+    font-size: 8rem;
+    font-weight: 700;
+    margin: 0;
+  }
+  
+.nextStage p:nth-child(2) {
+    font-size: 2rem;
+    color: rgb(173, 173, 173);
+    margin: 0;
+}
+
+.romanceFraud {
+    background-image: url('/pathway.png');
+}
+.shoppingFraud {
+    background-image: url('/supermarket.jpg');
+}
+
+.investmentFraud {
+    background-image: url('/bank.jpg');
+}

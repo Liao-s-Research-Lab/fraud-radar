@@ -1,0 +1,241 @@
+.navbarContainer { 
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    right: 0%;
+    bottom: auto;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 0 15rem;
+    z-index: 2;
+}
+
+.navbarBox {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    height: 6rem;
+}
+
+.navbarIcon {
+    cursor: pointer;
+}
+
+.navbarList {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.navbarLink {
+    display: flex;
+    gap: 2.875rem;
+    padding-top: 1.8rem;
+    padding-bottom: 1.8rem;
+    margin-left: auto;
+}
+
+.navbarAnchor {
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: white;
+}
+
+.active {
+    color: goldenrod;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 18px;
+    cursor: pointer;
+  }
+  
+.bar {
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    border-radius: 2px;
+}
+
+.navbarAdminContainer {
+    width: 300px;
+    height: 100vh;
+    border-right: 1px solid lightgray;
+    color: white;
+    background-color: #1f1f1f;
+    z-index: 2;
+}
+
+.navbarAdminBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* gap: 1.75rem; */
+    padding: 2.875rem 0;
+    height: 6rem;
+}
+
+.navbarAdminIcon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2.875rem;
+    border-bottom: 1px solid lightgray;
+}
+
+.navbarAdminLink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* gap: 1.8rem; */
+}
+
+.navbarAdminAnchor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 4.75rem;
+    width: 100%;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.navbarAdminAnchor:hover {
+    background-color: black;
+}
+/* .nav-container {
+    background-color: rgba(29,29,29,0.9);
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100px;
+    top: 0;
+    right: 0;
+    left: 0;
+    align-content: center;
+    box-shadow: 0px 3px 6px 3px #444;
+    z-index: 1000;
+    position: fixed;
+}
+
+.nav-menu {
+    margin-left: 200px;
+    margin-right: 200px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-title {
+    font-family: serif;
+    color: white; 
+}
+
+.nav-option {
+    font-size: 18px;
+    display: flex;
+}
+
+.nav-a {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    transition: color 0.25s;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: bolder;
+}
+
+.nav-a::after {
+    position: absolute;
+    content: '';
+    inset: 0;
+    background-color: rgba(255,255,255,0.5);
+    scale: 1 0;
+    z-index: -1;
+    transition: 0.45s;
+    border-radius: 5px;
+}
+
+.nav-a:hover {
+    text-decoration: underline;
+}
+
+
+.nav-a.active {
+    color: gold;
+}
+
+
+
+.nav-a div {
+    display: flex;
+    font-size: 24px;
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+} */
+
+/* 響應式設定 */
+@media (max-width: 1406px) {
+    .navbarAnchor {
+      font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 1300px) {
+    .navbarContainer {
+      padding: 0 1.5rem;
+    }
+  
+    .navbarBox {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .hamburger {
+      display: flex;
+    }
+  
+    /* 初始設定：隱藏navbarList */
+    .navbarList {
+      display: flex;
+      flex-direction: column;
+      background-color: rgba(0, 0, 0, 0.85);
+      z-index: 998;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      max-height: 0; /* 初始為0，不顯示 */
+      overflow: hidden; /* 防止超出部分顯示 */
+      transition: max-height 0.3s ease-in-out; /* 動畫效果 */
+    }
+  
+    /* 展開時的樣式 */
+    .navbarList.showMenu {
+      max-height: 500px; /* 根據內容設定最大高度，可以調整 */
+    }
+  
+    .navbarLink { 
+        flex-direction: column;
+        margin-left: 0;
+        gap: 1.25rem;
+    }
+
+    .navbarAnchor {
+      text-align: center;
+    }
+}
+

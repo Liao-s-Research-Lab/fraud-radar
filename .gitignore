@@ -1,0 +1,41 @@
+# 相依套件
+node_modules/
+**/node_modules/
+
+# Next.js / Vite 建置產物
+.next/
+dist/
+build/
+
+# Python 虛擬環境與快取
+**/venv/
+**/newenv/
+__pycache__/
+*.pyc
+
+# 訓練好的大型模型（用訓練腳本重新生成）
+backend/python/model/
+backend/python/bert/
+backend/python/emomodel/
+*.pth
+*.safetensors
+*.zip
+
+# 執行時上傳暫存
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# 金鑰與機密（請勿提交）
+credentials/*.json
+credentials/*.txt
+backend/config/*.json
+
+# 環境變數（含 API key），但保留範本 .env.example
+.env
+**/.env
+!.env.example
+!**/.env.example
+
+# 系統檔
+.DS_Store
+.expo/

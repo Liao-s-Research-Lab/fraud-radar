@@ -1,0 +1,458 @@
+:global(body.modal-open){
+  padding-right: 0 !important;
+}
+
+.websiteContainer {
+    height: 100vh;
+    background-image: url('/background8.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.testContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+    color: white;
+    display: flex; 
+    flex-direction: column;
+}
+
+.testBox {
+    margin-top: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.testMain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+}
+
+.testTopic {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.testTitle {
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 700;
+    line-height: 5rem;
+}
+
+.testSubtitle {
+    font-size: clamp(1rem, 2vw, 2.5rem);
+    font-weight: 700;
+}
+
+.tabs {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 2px solid goldenrod;
+    border-radius: 25px;
+    height: 50px;
+    width: 600px;
+    justify-content: space-between;
+    overflow: hidden;
+    background-color: black;
+    margin-top: 50px;
+}
+
+.tabs a {
+    font-weight: 700;
+    color: white;
+    z-index: 1;
+    text-decoration: none;
+    line-height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    width: 300px; 
+    text-align: center;
+    position: relative;
+}
+
+.tabsTransition {
+    position: absolute;
+    height: 100%;
+    background-color: goldenrod;
+    top: 0;
+    z-index: 0;
+    border-radius: 25px;
+    transition: all 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes typing {
+    0% {
+        width: 0;
+    }
+    50% {
+        width: 100%;
+    }
+    100%{
+        width: 100%;
+    }
+}
+@keyframes borderBlink {
+    0% {
+        border-right-color: rgb(62, 204, 181);
+    }
+    50% {
+        border-right-color: transparent;
+    }
+    100% {
+        border-right-color: rgb(62, 204, 181);
+    }
+}
+
+.level div {
+    background-color: transparent;
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    padding: 0 40px;
+    font-weight: 600;
+}
+
+.level > div:first-child {
+    margin-left: 20px;
+}
+.level > div:nth-child(2) {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.level > div:nth-child(3) {
+    margin-right: 20px;
+}
+
+.level div p:first-child {
+   margin: 0;
+   line-height: 30px;
+   font-size: 20px;
+   align-content: center;
+}
+
+.level div p:nth-child(2) {
+    line-height: 70px;
+    font-size: 48px;
+    margin: 0;
+    text-align: center;
+    align-content: center;
+}
+
+.analysis {
+    position: relative; 
+    top: 800px; 
+    background-color: rgb(246,249,255);
+}
+
+.card {
+    background-color: white;
+    width: 500px;
+    box-shadow: 1px 1px 5px lightgray;
+    border-radius: 10px;
+}
+
+
+.stepsBox {
+    position: relative;
+    padding: 0;
+    width: 100%;
+    color: white;
+    overflow: hidden; 
+}
+
+.stepsBox video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    z-index: 0; 
+}
+
+.stepsOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.717); 
+    z-index: 1; 
+}
+
+
+.stepsMain {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 85px auto 0;
+}
+
+.stepsContent {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.stepsTitle {
+    width: 100%;
+    text-align: center;
+}
+
+.stepsTitle > h2 {
+    font-weight: 700;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.stepsDescriptionBox {
+    margin: 0 auto;
+}
+
+.stepsDescription ul {
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+
+.stepsDescription ul li {
+    position: relative;
+    padding: 20px 0px 65px 145px;
+}
+
+.stepsDescription ul li::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 8px;
+    background-color: transparent;
+    left: 48px;
+}
+
+.stepsDescription ul li.active .iconHolder,
+.stepsDescription ul li.active .iconHolder::before {
+    background-color: #9d9d9d;
+}
+
+.stepsProgress {
+    width: 8px;
+    height: 78.5%; 
+    background-color: #1f1f1f;
+    position: absolute;
+    left: 48px;
+    top: 0;
+    overflow: hidden;
+}
+
+.inner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    background-color:  #9d9d9d;
+    width: 100%;
+}
+
+li h4 {
+    font-weight: 700;
+    margin-bottom: 1rem
+}
+
+li p {
+    line-height: 40px;
+    font-size: 20px;
+}
+
+.iconHolder {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 104px;
+    height: 104px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1f1f1f;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.iconHolder::before {
+    position: absolute;
+    content: "";
+    width: 80px;
+    height: 80px;
+    border: 4px solid #fff;
+    background-color: #1f1f1f;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.iconHolder > span {
+    font-size: 1.5rem;
+}
+
+.statisticsBox {
+    background-color:  black;
+    padding: 50px 0;
+}
+
+@media (max-width: 1217px) {
+.stepsMain {
+    margin: 70px 30px 0; 
+  }
+}
+@media (max-width: 1024px) {
+  .stepsTitle > h2 {
+    font-size: 2.5rem; 
+  }
+
+  .stepsDescription ul li {
+    padding: 20px 0px 50px 120px;
+  }
+
+  .iconHolder {
+    width: 90px;
+    height: 90px;
+  }
+
+  .iconHolder::before {
+    width: 65px;
+    height: 65px;
+  }
+
+  .iconHolder > span {
+    font-size: 1.4rem;
+  }
+
+  li h4 {
+    font-size: 1.2rem;
+  }
+
+  li p {
+    font-size: 18px;
+    line-height: 32px;
+  }
+
+  .stepsProgress {
+    left: 40px;
+  }
+
+  .stepsDescription ul li::before {
+    left: 40px;
+  }
+
+  .testBox {
+    margin-top: 10vh; /* 減少上邊距 */
+  }
+
+  .tabs {
+    width: 100%; /* 滿版 tabs */
+    height: 45px;
+  }
+
+  .tabs a {
+    font-size: 1.1rem;
+    width: 50%; 
+  }
+
+  /* .content {
+    width: 80%; 
+  } */
+}
+
+
+@media (max-width: 768px) {
+  .stepsMain {
+    margin: 50px 20px 0; 
+  }
+
+  .stepsTitle > h2 {
+    font-size: 2rem; 
+  }
+
+  .stepsDescription ul li {
+    padding: 20px 0px 40px 90px; 
+  }
+
+  .iconHolder {
+    width: 70px;
+    height: 70px;
+  }
+
+  .iconHolder::before {
+    width: 50px;
+    height: 50px;
+  }
+
+  .iconHolder > span {
+    font-size: 1.2rem;
+  }
+
+  li h4 {
+    font-size: 1rem;
+  }
+
+  li p {
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  .stepsProgress {
+    left: 30px; 
+  }
+
+  .stepsDescription ul li::before {
+    left: 30px;
+  }
+
+  .testBox {
+    margin-top: 8vh;
+  }
+
+  .testTitle {
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 3.5rem;
+  }
+
+  .testSubtitle {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .tabs {
+    height: auto;
+    width: 100%;
+  }
+
+  .tabs a {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 1rem;
+  }
+
+
+  /* .content {
+    width: 90%;
+  } */
+}

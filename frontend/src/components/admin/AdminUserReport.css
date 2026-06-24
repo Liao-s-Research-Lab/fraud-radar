@@ -1,0 +1,446 @@
+.MuiBox-root.css-8atqhb {
+  margin: 40px 0;
+  background-color: #1f1f1f;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.css-av90ce-MuiPaper-root {
+  background-color: rgba(29,29,29,0.9);
+  color: white;
+}
+
+/* 從第一個檔案移動過來的CSS */
+.MuiTablePagination-root .MuiIconButton-root, 
+.MuiTablePagination-root .MuiIconButton-root .MuiSvgIcon-root {
+  color: white !important;
+  fill: white !important;
+}
+
+.MuiTableCell-root {
+  padding: 8px 10px !important;
+}
+/* 從第一個檔案移動過來的CSS結束 */
+
+.MuiButtonBase-root.MuiTableSortLabel-root.MuiTableSortLabel-directionAsc.css-7x9vt0-MuiButtonBase-root-MuiTableSortLabel-root,
+.MuiTableCell-root.MuiTableCell-body.MuiTableCell-paddingNone.MuiTableCell-sizeMedium.css-g42i7m-MuiTableCell-root,
+.MuiTableCell-root.MuiTableCell-body.MuiTableCell-alignRight.MuiTableCell-sizeMedium.css-3ssuu9-MuiTableCell-root,
+.MuiTablePagination-displayedRows.css-11cfq65-MuiTablePagination-displayedRows,
+.MuiTablePagination-selectLabel.css-s09cke-MuiTablePagination-selectLabel,
+.MuiSelect-select.MuiTablePagination-select.MuiSelect-standard.MuiInputBase-input.css-mmygx2-MuiSelect-select-MuiInputBase-input,
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiSelect-icon.MuiTablePagination-selectIcon.MuiSelect-iconStandard.css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon,
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorInherit.MuiIconButton-sizeMedium.css-17ixm6u-MuiButtonBase-root-MuiIconButton-root,
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-lzk69h-MuiButtonBase-root-MuiIconButton-root,
+.MuiButtonBase-root.MuiCheckbox-root.MuiCheckbox-colorPrimary.MuiCheckbox-sizeMedium.PrivateSwitchBase-root.MuiCheckbox-root.MuiCheckbox-colorPrimary.MuiCheckbox-sizeMedium.MuiCheckbox-root.MuiCheckbox-colorPrimary.MuiCheckbox-sizeMedium.css-imrjgg-MuiButtonBase-root-MuiCheckbox-root,
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiTableSortLabel-icon.MuiTableSortLabel-iconDirectionAsc.css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon,
+.MuiButtonBase-root.MuiTableSortLabel-root.Mui-active.MuiTableSortLabel-directionDesc.css-7x9vt0-MuiButtonBase-root-MuiTableSortLabel-root,
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiTableSortLabel-icon.MuiTableSortLabel-iconDirectionDesc.css-asweb8-MuiSvgIcon-root-MuiTableSortLabel-icon,
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiTableSortLabel-icon.MuiTableSortLabel-iconDirectionDesc.css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon {
+  color: white;
+  /*font-size: 20px;
+  font-weight: bolder;*/
+}
+
+.MuiTablePagination-selectLabel.css-s09cke-MuiTablePagination-selectLabel,
+.MuiTablePagination-displayedRows.css-11cfq65-MuiTablePagination-displayedRows {
+  margin: 0;
+  /*font-size: 20px;
+  font-weight: bolder;*/
+}
+
+.MuiTableCell-root.MuiTableCell-body.MuiTableCell-alignRight.MuiTableCell-sizeMedium.css-3ssuu9-MuiTableCell-root{
+  font-size: 18px;
+  font-weight:600;
+  line-height: 30px;
+}/*欄位*/
+
+.MuiTableCell-root.MuiTableCell-head.MuiTableCell-alignRight.MuiTableCell-sizeMedium.css-to33az-MuiTableCell-root{
+  font-size: 20px;
+  font-weight: bolder;
+  line-height: 30px;
+}/*標題*/
+
+.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.MuiTablePagination-toolbar.css-1gak8h1-MuiToolbar-root-MuiTablePagination-toolbar,
+.MuiTablePagination-selectLabel.css-s09cke-MuiTablePagination-selectLabel,
+.MuiTablePagination-displayedRows.css-11cfq65-MuiTablePagination-displayedRows,
+.MuiSelect-select.MuiTablePagination-select.MuiSelect-standard.MuiInputBase-input.css-mmygx2-MuiSelect-select-MuiInputBase-input,
+.MuiTypography-root.MuiTypography-subtitle1.css-t05oqc-MuiTypography-root{
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 50px;
+}/*顯示筆數那邊，跟選擇了幾筆*/
+
+.MuiButtonBase-root.Mui-disabled.MuiIconButton-root.Mui-disabled.MuiIconButton-colorInherit.MuiIconButton-sizeMedium.css-17ixm6u-MuiButtonBase-root-MuiIconButton-root {
+  color: rgb(122, 121, 121);
+}
+
+
+.adminupdate-text {
+  font-size: 20px;
+}
+
+.adminpreview-updatecheck {
+  font-size: 25px;
+  font-weight: bolder;
+  margin-bottom: 0;
+}
+
+.adminpreview-updatecheck.updatecheck-mt {
+  margin-top: 20px;
+}
+
+.adminpreview-updatecheck-confirm {
+  color: rgba(29, 29, 29, 0.9) !important;
+}
+.adminpreview-updatecheck-confirm:hover {
+  background: rgba(29, 29, 29, 0.9);
+  color: white !important;
+}
+
+.toolbar{
+  /*background-color: rgba(255, 255, 255, 0.096) !important;*/
+  border-radius: 10px 10px 0px 0px !important;
+}
+
+.none{
+  background-color: transparent !important;
+  border-radius: 10px !important;
+  border:2px solid white !important;
+  width:100% !important;
+  backdrop-filter: blur(15px);
+}
+
+.css-5hj5np-MuiToolbar-root{
+  background-color: goldenrod !important;
+}
+
+.admin-root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  background-image: url('../../images/WaveLine.png');
+  background-size: cover;
+  background-position: center;
+  overflow-y: auto; /* 允許縱向滾動 */
+  background-repeat: no-repeat;
+}
+
+.m-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* 確保在其他內容上方 */
+}
+
+.m-content {
+  background: white;
+  width: 600px;
+  height: 400px;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.m-title{
+  font-size: 30px;
+  font-weight: bolder;
+  margin:50px;
+}
+
+.admin-col-area{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.admin-enter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 20px;
+  color: white;
+  background: goldenrod;
+  font-weight: bolder;
+  border: none;
+  letter-spacing: 0.05em;
+  border-radius: 10px;
+  width: 150px;
+  height: 70px;
+}
+
+.admin-enter:hover {
+  background: gold;
+}
+
+.admin-jumps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 20px;
+  color: white;
+  background: gray;
+  font-weight: bolder;
+  border: none;
+  letter-spacing: 0.05em;
+  border-radius: 10px;
+  width: 150px;
+  height: 70px;
+  margin-left: 10px;
+}
+
+.admin-jumps:hover {
+  background: lightgray;
+}
+
+/* 提取的內聯樣式 */
+.icon-white {
+  color: white;
+}
+
+/* 確保圖標按鈕內的所有SVG圖標都是白色 */
+.icon-white svg {
+  color: white;
+  fill: white;
+}
+
+.icon-white .MuiSvgIcon-root {
+  color: white;
+  fill: white;
+}
+
+.relative-position {
+  position: relative;
+}
+
+.full-width {
+  width: 100%;
+  max-width: 100%;
+}
+
+.icon-large {
+  font-size: 80px;
+  margin-top: 35px;
+  transform: scale(1.5);
+}
+
+/* 為表頭和單元格設置樣式 */
+.table-head-cell {
+  color: white;
+  font-weight: bolder;
+}
+
+.table-cell {
+  color: white;
+}
+
+/* 為head cells設置樣式 */
+.head-cell-label {
+  color: white;
+  font-weight: bold;
+}
+
+
+.icon-large {
+  font-size: 80px;
+  margin-top: 35px;
+  transform: scale(1.5);
+}
+
+.edit-modal-content {
+  max-width: 800px;
+  width: 95%;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+}
+
+.edit-modal-title {
+  margin: 0;
+}
+
+.edit-modal-body {
+  padding: 0 10px 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.edit-modal-footer {
+  padding: 10px 10px 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  border-top: 1px solid #eee;
+}
+
+.fraud-check-modal {
+  max-width: 500px;
+  max-height: 350px;
+  padding: 20px;
+  position: relative;
+}
+
+.close-icon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  color: black;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.text-center-padding {
+  text-align: center;
+  padding: 20px;
+}
+
+.update-result-title {
+  font-size: 30px;
+  font-weight: bolder;
+  line-height: 45px;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.modal-body-left-margin {
+  margin-left: 10px;
+}
+
+.modal-center-footer {
+  display: flex;
+  justify-content: center;
+}
+
+/* TextField 相關樣式 */
+.text-field-font {
+  font-size: 18px;
+}
+
+.text-field-label {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.text-field-helper {
+  font-size: 16px;
+}
+
+/* 調整各欄位的寬度比例 */
+.MuiTableCell-root:nth-child(2) {
+  width: 25%; /* 報告內容 */
+}
+
+.MuiTableCell-root:nth-child(3) {
+  width: 15%; /* 來源 */
+}
+
+.MuiTableCell-root:nth-child(4) {
+  width: 15%; /* 附註 */
+}
+
+.MuiTableCell-root:nth-child(5),
+.MuiTableCell-root:nth-child(8) {
+  width: 8%; /* 詐騙結果和詐騙率 */
+}
+
+.MuiTableCell-root:nth-child(6),
+.MuiTableCell-root:nth-child(7) {
+  width: 14.5%; /* 匹配關鍵字和匹配類型 */
+}
+
+/* 動畫效果 */
+.bubblingG {
+  text-align: center;
+  width: 110px;
+  height: 69px;
+  margin: auto;
+}
+
+.bubblingG span {
+  display: inline-block;
+  vertical-align: middle;
+  width: 14px;
+  height: 14px;
+  margin: 34px auto;
+  background: rgb(237,191,9);
+  border-radius: 69px;
+  -o-border-radius: 69px;
+  -ms-border-radius: 69px;
+  -webkit-border-radius: 69px;
+  -moz-border-radius: 69px;
+  animation: bubblingG 1.5s infinite alternate;
+  -o-animation: bubblingG 1.5s infinite alternate;
+  -ms-animation: bubblingG 1.5s infinite alternate;
+  -webkit-animation: bubblingG 1.5s infinite alternate;
+  -moz-animation: bubblingG 1.5s infinite alternate;
+}
+
+#bubblingG_1 {
+  animation-delay: 0s;
+  -o-animation-delay: 0s;
+  -ms-animation-delay: 0s;
+  -webkit-animation-delay: 0s;
+  -moz-animation-delay: 0s;
+}
+
+#bubblingG_2 {
+  animation-delay: 0.45s;
+  -o-animation-delay: 0.45s;
+  -ms-animation-delay: 0.45s;
+  -webkit-animation-delay: 0.45s;
+  -moz-animation-delay: 0.45s;
+}
+
+#bubblingG_3 {
+  animation-delay: 0.9s;
+  -o-animation-delay: 0.9s;
+  -ms-animation-delay: 0.9s;
+  -webkit-animation-delay: 0.9s;
+  -moz-animation-delay: 0.9s;
+}
+
+@keyframes bubblingG {
+  0% {
+    width: 14px;
+    height: 14px;
+    background-color: rgba(107,98,42,0.98);
+    transform: translateY(0);
+  }
+
+  100% {
+    width: 33px;
+    height: 33px;
+    background-color: rgb(242,230,172);
+    transform: translateY(-29px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .admin-table {
+    min-width: 1600px !important;
+  }
+}

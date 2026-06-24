@@ -1,0 +1,95 @@
+.admin-root {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    background-image: url('../../images/WaveLine.png');
+    background-size: cover;
+    background-position: center;
+    overflow-y: auto; /* 允許縱向滾動 */
+    background-repeat: no-repeat;
+}
+
+.m-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 確保在其他內容上方 */
+  }
+  
+.m-content {
+    background: white;
+    width: 600px;
+    height: 400px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.m-title{
+    font-size: 30px;
+    font-weight: bolder;
+    margin:50px;
+}
+
+.admin-col-area{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.admin-enter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 20px;
+    color: white;
+    background: goldenrod;
+    font-weight: bolder;
+    border: none;
+    letter-spacing: 0.05em;
+    border-radius: 10px;
+    width: 150px;
+    height: 70px;
+}
+
+.admin-enter:hover {
+    background: gold;
+}
+
+  .admin-jumps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 20px;
+    color: white;
+    background: gray;
+    font-weight: bolder;
+    border: none;
+    letter-spacing: 0.05em;
+    border-radius: 10px;
+    width: 150px;
+    height: 70px;
+    margin-left: 10px;
+}
+
+.admin-jumps:hover {
+    background: lightgray;
+}

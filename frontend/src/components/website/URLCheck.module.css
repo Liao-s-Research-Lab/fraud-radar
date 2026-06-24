@@ -1,0 +1,303 @@
+.urlInputContainer {
+    display: flex;
+    align-items: center;
+    background-color: black;
+    border-radius: 75px;
+    height: 120px;
+    border: 1px solid #353535;
+    box-shadow: 0px 0px 5px rgba(145, 145, 145, 0.5);
+    overflow: hidden;
+}
+
+.inputWrapper {
+    position: relative;
+    width: 100%;
+    margin: 20px;
+}
+
+.urlInput {
+    width: 100%;
+    height: 80px;
+    outline: none;
+    font-size: 20px;
+    padding: 20px 50px 20px 20px;
+    border-radius: 75px;
+    border: 1px solid #353535;
+    box-shadow: 0px 0px 5px rgb(145, 145, 145);
+    background-color: #1f1f1f;
+    color: #f0f0f0;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.urlInput::placeholder {
+    color: rgba(211, 211, 211, 0.75);
+}
+
+.urlInput:focus {
+    border-color: lightgray; 
+}
+
+.clearBtn {
+    position: absolute;
+    background-color: #353535;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    right: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.25s linear;
+}
+
+.clearBtn:hover {
+    color: goldenrod;
+}
+
+.btnUrlArea {
+    background-color: #1f1f1f;
+    height: inherit;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.urlSubmit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 20px;
+    padding: 15px;
+    color: black;
+    background-color: rgb(240, 240, 240, 0.9);
+    border: 1px solid gray;
+    letter-spacing: 0.05em;
+    border-radius: 75px;
+    width: 150px;
+    height: 50px;
+    transition: background-color 0.25s linear;
+}
+
+.urlSubmit:hover{
+    background-color: white;
+}
+
+.urlSubmit > svg {
+    margin-left: 5px;
+    transform: rotate(30deg);
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.urlSubmit > span {
+    margin-left: 10px;
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.urlSubmit:hover > svg {
+    transform: translateX(5px) rotate(90deg);
+}
+
+.level {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: min-content;
+    margin-top: 20px;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px 5px black;
+}
+
+.modalCustom .modalDialog {
+    max-width: 50%;
+    width: 840px; 
+    max-height: 80vh; 
+    height: auto; 
+}
+
+
+
+  .urlEnter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 18px;
+    color: white;
+    background: goldenrod;
+    font-weight: bolder;
+    border: none;
+    letter-spacing: 0.05em;
+    border-radius: 10px;
+    width: 80px;
+    height: 50px;
+}
+
+.urlEnter:hover {
+    background: gold;
+}
+
+.urlSkip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 18px;
+    color: white;
+    background: gray;
+    font-weight: bolder;
+    border: none;
+    letter-spacing: 0.05em;
+    border-radius: 10px;
+    width: 80px;
+    height: 50px;
+}
+
+.urlSkip:hover {
+    background: lightgray;
+}
+
+
+
+
+
+  .bubblingG {
+	text-align: center;
+	width:110px;
+	height:69px;
+	margin: auto;
+}
+
+.bubblingG span {
+	display: inline-block;
+	vertical-align: middle;
+	width: 14px;
+	height: 14px;
+	margin: 34px auto;
+	background: rgb(237,191,9);
+	border-radius: 69px;
+		-o-border-radius: 69px;
+		-ms-border-radius: 69px;
+		-webkit-border-radius: 69px;
+		-moz-border-radius: 69px;
+	animation: bubblingG 1.5s infinite alternate;
+		-o-animation: bubblingG 1.5s infinite alternate;
+		-ms-animation: bubblingG 1.5s infinite alternate;
+		-webkit-animation: bubblingG 1.5s infinite alternate;
+		-moz-animation: bubblingG 1.5s infinite alternate;
+}
+
+#bubblingG_1 {
+	animation-delay: 0s;
+		-o-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+		-webkit-animation-delay: 0s;
+		-moz-animation-delay: 0s;
+}
+
+#bubblingG_2 {
+	animation-delay: 0.45s;
+		-o-animation-delay: 0.45s;
+		-ms-animation-delay: 0.45s;
+		-webkit-animation-delay: 0.45s;
+		-moz-animation-delay: 0.45s;
+}
+
+#bubblingG_3 {
+	animation-delay: 0.9s;
+		-o-animation-delay: 0.9s;
+		-ms-animation-delay: 0.9s;
+		-webkit-animation-delay: 0.9s;
+		-moz-animation-delay: 0.9s;
+}
+
+
+
+@keyframes bubblingG {
+	0% {
+		width: 14px;
+		height: 14px;
+		background-color:rgba(107,98,42,0.98);
+		transform: translateY(0);
+	}
+
+	100% {
+		width: 33px;
+		height: 33px;
+		background-color:rgb(242,230,172);
+		transform: translateY(-29px);
+	}
+}
+
+@-o-keyframes bubblingG {
+	0% {
+		width: 14px;
+		height: 14px;
+		background-color:rgba(107,98,42,0.98);
+		-o-transform: translateY(0);
+	}
+
+	100% {
+		width: 33px;
+		height: 33px;
+		background-color:rgb(242,230,172);
+		-o-transform: translateY(-29px);
+	}
+}
+
+@-ms-keyframes bubblingG {
+	0% {
+		width: 14px;
+		height: 14px;
+		background-color:rgba(107,98,42,0.98);
+		-ms-transform: translateY(0);
+	}
+
+	100% {
+		width: 33px;
+		height: 33px;
+		background-color:rgb(242,230,172);
+		-ms-transform: translateY(-29px);
+	}
+}
+
+@-webkit-keyframes bubblingG {
+	0% {
+		width: 14px;
+		height: 14px;
+		background-color:rgba(107,98,42,0.98);
+		-webkit-transform: translateY(0);
+	}
+
+	100% {
+		width: 33px;
+		height: 33px;
+		background-color:rgb(242,230,172);
+		-webkit-transform: translateY(-29px);
+	}
+}
+
+@-moz-keyframes bubblingG {
+	0% {
+		width: 14px;
+		height: 14px;
+		background-color:rgba(107,98,42,0.98);
+		-moz-transform: translateY(0);
+	}
+
+	100% {
+		width: 33px;
+		height: 33px;
+		background-color:rgb(242,230,172);
+		-moz-transform: translateY(-29px);
+	}
+}
+

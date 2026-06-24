@@ -1,0 +1,321 @@
+.alertContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 1rem;
+    background: linear-gradient(45deg, rgb(70, 70, 70), rgb(177, 177, 177), rgba(70, 70, 70));
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    animation: gradient-animation 8s ease infinite;
+    background-size: 400% 400%;
+}
+@keyframes gradient-animation {
+  0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.alertIcon {
+    color: white;
+}
+
+.characterUsernameAlert {
+    margin: 0;
+    font-size: 24px;
+    color: white;
+}
+
+.characterContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  /* gap: 20px; */
+  overflow: hidden;
+
+}
+
+.characterImgContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.characterSelection {
+  display: flex;
+  align-items: center;
+  gap: 200px;
+  padding: 20px;
+}
+
+.arrow {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  box-sizing: content-box;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+.arrow:hover {
+  background-color: rgba(0, 0, 0, 0.25);
+  transform: scale(1.1);
+}
+
+
+
+.image {
+  position: absolute;
+  width: calc(100% / 3);
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out;
+}
+
+
+.pos0 {
+  transform: translateX(0) scale(1);
+}
+
+
+.pos1 {
+  transform: translateX(100%) scale(0.7);
+  filter: brightness(50%);
+}
+
+
+.pos2 {
+  transform: translateX(-100%) scale(0.7);
+  filter: brightness(50%);
+}
+
+.pos3 {
+  transform: translateX(-200%) scale(0.7);
+  filter: brightness(50%);
+}
+
+.pos4 {
+  transform: translateX(200%) scale(0.7);
+  filter: brightness(50%);
+}
+  
+/* 暱稱輸入 */
+.nicknameContainer {
+  position: relative;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.waveGroup {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    gap: 20px;
+}
+
+.inputContainer {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+}
+@media (max-width: 768px) {
+  .inputContainer {
+    width: 50%;
+  }
+}
+.userIcon {
+    position: absolute;
+    left: 0;
+    color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.input {
+    width: 100%;
+    padding: 8px 30px;
+    font-size: 16px;
+    color: black;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+    transition: all 0.3s;
+    text-align: center;
+}
+.inputBorderBottom {
+  border-bottom: 2px solid black;
+}
+
+.input:focus {
+    outline: none;  
+}
+
+.label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 4px;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.labelChar {
+    color: rgba(0, 0, 0, 0.5);
+    transition: 0.3s ease all;
+    transition-delay: calc(var(--index) * 0.05s);
+}
+
+.input:focus ~ .label .labelChar,
+.input:valid ~ .label .labelChar {
+    transform: translateY(-27px) scale(0.9);
+    color: black;
+}
+.inputContainer:focus-within .userIcon {
+    color: black;
+}
+
+.charCount {
+    position: absolute;
+    top: 50%;
+    transform: translate(1050%, -50%);
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    pointer-events: none;
+}
+
+.input:focus ~ .charCount,
+.input:valid ~ .charCount {
+  color: black;
+}
+
+@media (max-width: 768px) {
+  .charCount {
+    display: none; 
+  }
+}
+
+.confirmButton {
+  border: none;
+  width: 100%;
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.confirmButton:disabled:hover {
+  cursor: default;
+}
+
+.userIconBlack,
+.confirmButtonBlack {
+  color: black;
+}
+
+/* .avatar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 50%;
+    margin: 0 50px;
+}
+.card {
+    position: relative;
+    height: 75%;
+    width: 25%;
+    perspective: 2500px;
+    cursor: pointer;
+}
+.coverImage {
+    height: 100%;
+    width: 100%;
+}
+.wrapper {
+    transition: all 0.5s;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: -1;
+}
+
+.wrapper::before,
+.wrapper::after {
+    content: '';
+    opacity: 0;
+    width: 100%;
+    height: 80px;
+    transition: all 0.5s;
+    position: absolute;
+    left: 0;
+}
+.wrapper::before {
+    top: 0;
+    height: 100%;
+    background-image: linear-gradient(to top, transparent 46%, rgba(12, 13, 19, 0.5) 68%, rgb(12, 13, 19) 97%);
+}
+.wrapper::after {
+    bottom: 0;
+    opacity: 0;
+    background-image: linear-gradient(to top, transparent 46%, rgba(12, 13, 19, 0.5) 68%, rgb(12, 13, 19) 97%);
+
+}
+
+.title {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transition: transform 0.5s;
+}
+
+.character {
+    width: 100%;
+    opacity: 0;
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+    transition: all 0.5s;
+}
+
+.card:hover .wrapper {
+    transform: perspective(900px) translateY(-5%) rotateX(25deg) translateZ(0);
+    box-shadow: 0px 35px 32px -8px rgba(0, 0, 0, 0.75);
+}
+
+.card:hover .title {
+    transform:  translate3d(0%, -50%, 100px);
+}
+.card:hover .wrapper::after,
+.wrapper::before {
+    opacity: 1;
+}
+.card:hover .wrapper::after {
+    height: 120px;
+}
+.card:hover .wrapper::before {
+    opacity: 1;
+}
+.card:hover .character {
+    opacity: 1;
+    transform:  translate3d(0%, -30%, -100px);
+} */

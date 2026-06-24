@@ -1,0 +1,519 @@
+.quizContainer {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: #121212; /* Fallback for browsers that don't support gradients */
+    background-image: url("/test2.gif");
+    background-size: cover;
+    z-index: 0;
+}
+.quizContainer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25); 
+    z-index: 1;
+}
+
+.quizTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: black;
+    width: 50%;
+    height:15%;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 700;
+    z-index: 1;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 15px 4px, rgba(0, 0, 0, 0.4) 0px 15px 13px -3px, rgba(0, 0, 0, 0.3) 0px -10px 0px inset;
+    z-index: 2;
+}
+@media (max-width: 768px) {
+    .quizTitle {
+      font-size: 3rem;
+    }
+  }
+
+.quizContent {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    height: 80%;
+    background-color: rgba(0, 0, 0, 0.25);
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    margin: 0 auto;
+    padding: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    gap: 40px;
+    z-index: 1;
+}
+
+.quizContentLeft {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 400px;
+    height: 100%;
+    padding: 20px;
+    gap: 20px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1),rgba(255, 255, 255, 0.6));
+    align-content: center;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.quizContentRight {
+    position: relative;
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    color: black;
+    gap: 35px;
+    flex: 1 1 400px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1),rgba(255, 255, 255, 0.6));
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 2;
+    border-radius: 10px;
+  }
+
+.levelButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+      /* margin: 50px auto 0 auto; */
+    padding: auto 15px 15px auto;
+    width: 250px;
+    height: 40px;
+    border-radius: 5px;
+    border: 2px solid var(--main-color);
+    background-color: var(--bg-color);
+    box-shadow: 4px 4px var(--main-color);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--font-color);
+    cursor: pointer;
+    transition: all 250ms;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .levelButton::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background-color: #212121;
+    z-index: -1;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    transition: all 250ms;
+  }
+  
+  .levelButton:hover {
+    color: #e8e8e8;
+  }
+  
+  .levelButton:hover::before {
+    width: 100%;
+  }
+  
+/* Return Button */
+.returnButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 0;
+
+}
+
+.returnButton button {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+.returnButton button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+
+/* Dialogue Box */
+.dialogueBox {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 80%;
+    height: 25vh;
+    background: linear-gradient(
+        to right, 
+        rgba(0, 0, 0, 0) 0%, 
+        rgba(0, 0, 0, 0.75) 10%,
+        rgba(0, 0, 0, 0.75) 90%, 
+        rgba(0, 0, 0, 0) 100%   
+    );
+    padding: 20px 200px;
+    z-index: 1;
+    margin-top: auto;
+}
+
+.dialogueText {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.5;
+    padding-left: 50px;
+}
+
+.question {
+    position: relative;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between; 
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 85%;
+    z-index: 0;
+}
+
+.characterLeft {
+    display: flex;
+    justify-content: center;
+    width: 35%;
+    height: 100%;
+}
+
+.characterLeftImage {
+    filter: brightness(50%);
+}
+
+.characterRight {
+    display: flex;
+    justify-content: center;
+    width: 35%;
+    height: 100%;
+}
+
+.characterRightImage {
+    filter: brightness(50%);
+    /* transform: scaleX(-1); */
+}
+
+.myturn {
+    transform: scale(1.1);
+    filter: brightness(100%);
+    transition: all 1;
+}
+.characterName1,
+.characterName2 {
+    position: relative;
+    background-color: #000000;
+    transform: translateY(-37.5px);
+    font-weight: bold;
+    margin-bottom: 10px;
+    width: 150px;
+    text-align: center;
+    font-size: larger;
+    line-height: 2;
+    border: 1px solid white;
+    border-radius: 15px;
+}
+.characterName2 {
+    margin-left: calc(100vw * 0.8 - 550px);
+}
+
+.records {
+    display: flex;
+    flex-direction: column;
+    flex: 0.9;
+    height: 60%;
+    padding: 15px;
+    background-color: rgba(191, 191, 191, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+    z-index: 3;
+    margin: 0 10px;
+    overflow-y: auto;
+    font-size: large;
+}
+
+.recordsLeft {
+    position: relative;
+    display: flex;
+    margin: 10px 0;
+    justify-content: flex-start; 
+}
+.recordsLeftText {
+    background-color: rgba(72, 113, 247);
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
+    width: auto;
+}
+.recordsLeftText:hover {
+    cursor: pointer;
+    background-color: rgb(2, 162, 255);
+}
+.recordsLeftText::before {
+    content: '';
+    position: absolute;
+    top: 12.5px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    transform: rotate(90deg) translateX(5px) translateY(22.5px);
+    border-top: 10px solid rgba(72, 113, 247); 
+}
+.recordsLeftText:hover::before {
+    border-top: 10px solid rgb(2, 162, 255);
+}
+
+.recordsRight {
+    position: relative;
+    display: flex;
+    margin: 10px 0;
+    justify-content: flex-end; 
+}
+.recordsRightText {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
+    width: auto;
+}
+.recordsRightText:hover {
+    cursor: pointer;
+    background-color: rgb(221, 221, 221);
+}
+.recordsRightText::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 12.5px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    transform: rotate(270deg) translateX(-5px) translateY(2.5px); 
+    border-top: 10px solid white;
+}
+.recordsRightText:hover::after {
+    border-top: 10px solid rgb(221, 221, 221);
+}
+
+/* 正確答案 */
+.correctAnswer {
+    background-color: green; 
+}
+.correctAnswer:hover {
+    background-color: rgb(5, 173, 86);
+}
+.correctAnswer::before {
+    border-top: 10px solid green;
+}
+.correctAnswer:hover::before {
+    border-top: 10px solid rgb(5, 173, 86);
+}
+/* 錯誤答案 */
+.incorrectAnswer {
+    background-color: red;
+    color: white;
+}
+.incorrectAnswer:hover {
+    background-color: rgb(220, 0, 0);
+}
+.incorrectAnswer::before,
+.incorrectAnswer::after {
+    border-top: 10px solid rgb(255, 28, 28);
+}
+.incorrectAnswer:hover::before,
+.incorrectAnswer:hover::after {
+    border-top: 10px solid rgb(220, 0, 0);
+}
+.options {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    z-index: 3;
+}
+
+.option {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.option:hover {
+    background-color: #ddd;
+}
+
+/* Menu Controls */
+.recordsControls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+    z-index: 3;
+}
+
+.recordsControls button {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+.recordsControls button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+
+
+.pageTransition {
+    z-index: 100;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.svg,
+.tempbg {
+    width: calc(100vw + 600px);
+    height: 100vh;
+    left: -300px;
+    position: fixed;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.enterTransition {
+    background-color: black;
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Return Button */
+.returnButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+}
+
+.returnButton button {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+.returnButton button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+
+/* .quizContainer {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: #121212; 
+    background: linear-gradient(
+      135deg,
+      #121212 25%,
+      #1a1a1a 25%,
+      #1a1a1a 50%,
+      #121212 50%,
+      #121212 75%,
+      #1a1a1a 75%,
+      #1a1a1a
+    );
+    background-size: 40px 40px;
+    animation: move 4s linear infinite;
+    z-index: 0;
+}
+@keyframes move {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 40px 40px;
+    }
+} */

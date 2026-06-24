@@ -1,0 +1,15 @@
+{
+  "name": "fraud-radar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "騙局雷達 — 一鍵啟動前端 + Next.js 後端 + Flask AI 服務",
+  "scripts": {
+    "dev": "concurrently -n FRONT,NEXT,FLASK -c cyan,green,magenta \"npm:dev:front\" \"npm:dev:next\" \"npm:dev:flask\"",
+    "dev:front": "npm --prefix frontend run dev",
+    "dev:next": "npm --prefix backend run dev",
+    "dev:flask": "cd backend/python && set PYTHONIOENCODING=utf-8&& set HF_HUB_OFFLINE=1&& set TRANSFORMERS_OFFLINE=1&& venv\\Scripts\\python app1.py"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

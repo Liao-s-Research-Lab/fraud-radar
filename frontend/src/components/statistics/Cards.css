@@ -1,0 +1,42 @@
+.card-custom {
+     flex: 1 1 300px; /* 💡 這行是重點：讓每張卡片初始寬度為 300px，且允許縮放和換行 */
+    max-width: 100%;
+    border: 0 !important;
+    color: white !important;
+}
+
+.cardbody-custom {
+    padding: 40px 40px !important;
+}
+
+.cardtext-custom {
+    height: 50px;
+    line-height: 50px;
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.bg-gradient-pink {
+    background-image: 
+        url('../../images/circle.svg'),
+        linear-gradient(90deg, rgb(255, 191, 150), rgb(254, 112, 150));
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.bg-gradient-blue {
+    background-image: 
+        url('../../images/circle.svg'),
+        linear-gradient(90deg, rgb(144, 202, 249), rgb(4, 126, 223));
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.bg-gradient-green {
+    background-image: 
+        url('../../images/circle.svg'),
+        linear-gradient(90deg, rgb(132, 217, 210), rgb(7, 205, 174));
+    background-repeat: no-repeat;
+    background-position: right;
+}
