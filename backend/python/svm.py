@@ -1,0 +1,162 @@
+import joblib
+import pandas as pd
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+from sklearn.svm import OneClassSVM
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics import silhouette_score
+import firebase_admin
+from firebase_admin import credentials, firestore
+import numpy as np
+import torch
+from transformers import BertTokenizer, BertModel
+from flask import Flask, request, jsonify
+import os
+
+# 初始化 Flask 應用
+app = Flask(__name__)
+
+# 初始化 Firebase Admin
+cred = credentials.Certificate('../config/dayofftest1-firebase-adminsdk-xfpl4-f64d9dc336.json')
+firebase_admin.initialize_app(cred)
+db = firestore.client()
+
+# 初始化 BERT
+tokenizer = BertTokenizer.from_pretrained('bert-base-chinese')
+bert_model = BertModel.from_pretrained('bert-base-chinese')
+
+# 刪除現有的模型文件（包括 .pkl 和 .pth）
+def remove_existing_model_files():
+    # 定義需要刪除的文件擴展名
+    extensions = ['.pkl', '.pth']
+    
+    # 遍歷當前目錄下的所有文件
+    for file in os.listdir('.'):
+        if any(file.endswith(ext) for ext in extensions):
+            os.remove(file)
+            print(f"已刪除模型文件: {file}")
+
+#獲得資料表
+def get_data_from_firestore():
+    collection_ref = db.collection('FraudDefine')
+    docs = collection_ref.stream()
+    data = []
+    for doc in docs:
+        data.append(doc.to_dict())
+    return data
+
+def encode_with_bert(data):
+    """
+    使用 BERT 對關鍵詞列表進行編碼，返回嵌入向量。
+    """
+    inputs = tokenizer(data, padding=True, truncation=True, return_tensors="pt", max_length=128)
+    with torch.no_grad():  # 不需要反向傳播
+        outputs = bert_model(**inputs)
+    embeddings = torch.mean(outputs.last_hidden_state, dim=1)  # 平均池化
+    return embeddings.cpu().numpy()
+
+def update_model():
+    # 刪除舊模型文件
+    remove_existing_model_files()
+    
+    # 從 Firestore 獲取數據
+    firestore_data = get_data_from_firestore()
+    df = pd.DataFrame(firestore_data)
+    df.dropna(subset=['Keyword'], inplace=True)
+
+    data = df['Keyword'].tolist()
+
+    # 計算 TF-IDF 特徵
+    global vectorizer
+    vectorizer = TfidfVectorizer(max_features=1000, max_df=1.0, min_df=1)
+    X_tfidf = vectorizer.fit_transform(data).toarray()  # 生成 TF-IDF 特徵矩陣
+
+    # 計算 BERT 特徵
+    X_bert = encode_with_bert(data)  # 使用 BERT 生成文本嵌入向量
+
+    print("TF-IDF shape:", X_tfidf.shape)
+    print("BERT shape:", X_bert.shape)
+    # 結合 TF-IDF 和 BERT 特徵
+    X = np.hstack((X_tfidf, X_bert))  # 將 TF-IDF 和 BERT 特徵水平拼接
+    print("Combined shape:", X.shape)  # 打印確認
+
+    # 標準化特徵
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)  
+    print("Shape after scaling:", X_scaled.shape)
+
+    # PCA 降維
+    pca = PCA(n_components=0.95)
+    X_pca = pca.fit_transform(X_scaled)
+    print("Shape of X after PCA:", X_pca.shape)  # 這將告訴您 PCA 後的形狀
+
+    # KMeans 聚類
+    silhouette_scores = []
+    for n_clusters in range(2, 10):
+        kmeans = KMeans(n_clusters=n_clusters, random_state=42)
+        clusters = kmeans.fit_predict(X_pca)
+        score = silhouette_score(X_pca, clusters)
+        silhouette_scores.append(score)
+
+    best_n_clusters = silhouette_scores.index(max(silhouette_scores)) + 2
+    kmeans = KMeans(n_clusters=best_n_clusters, random_state=42)
+    clusters = kmeans.fit_predict(X_pca)
+
+    # One-Class SVM 模型訓練
+    global ocsvm_models
+    ocsvm_models = []
+    for cluster in set(clusters):
+        X_cluster = X_pca[clusters == cluster]
+        ocsvm = OneClassSVM(kernel='rbf', nu=0.4, gamma='scale')
+        ocsvm.fit(X_cluster)
+        ocsvm_models.append(ocsvm)
+
+    # 保存模型
+    joblib.dump(vectorizer, 'vectorizer.pkl')
+    joblib.dump(scaler, 'scaler.pkl')
+    joblib.dump(pca, 'pca.pkl')
+    for i, model in enumerate(ocsvm_models):
+        joblib.dump(model, f'ocsvm_model_{i}.pkl')
+
+
+
+#以下是判斷類型的模型
+    # -------------------------------------------------------------
+
+def update_model2():
+    # 加載 BERT Tokenizer 和 Model
+    tokenizer = BertTokenizer.from_pretrained('bert-base-chinese', clean_up_tokenization_spaces=False)
+    model_type = BertModel.from_pretrained('bert-base-chinese')
+
+    # 從 Firestore 獲取詐騙類型及描述
+    def fraud_type_descriptions():
+        descriptions = {}
+        docs = db.collection('Statistics').stream()
+        for doc in docs:
+            data = doc.to_dict()
+            fraud_type = data.get('Type')
+            fraud_define = data.get('Define')
+            if fraud_type and fraud_define:
+                descriptions[data['Type']] = data['Define']
+        return descriptions
+
+    # 獲取文本的 BERT 嵌入
+    def get_embedding(text):
+        inputs = tokenizer(text, return_tensors='pt', truncation=True, padding=True, max_length=128)
+        with torch.no_grad():
+            outputs = model_type(**inputs)
+        return outputs.last_hidden_state.mean(dim=1).numpy()
+
+    # 獲取所有詐騙類型描述並計算其嵌入
+    fraud_type_embeddings = {key: get_embedding(desc) for key, desc in fraud_type_descriptions().items()}
+
+    # 保存模型狀態和嵌入
+    torch.save({
+        'model_state_dict': model_type.state_dict(),
+        'fraud_type_embeddings': fraud_type_embeddings
+    }, 'bert_fraud_model.pth')
+
+if __name__ == "__main__":
+    # update_model()
+    update_model2()

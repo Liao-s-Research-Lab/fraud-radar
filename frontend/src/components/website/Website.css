@@ -1,0 +1,159 @@
+.website-container {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    z-index: 0;
+    background-image: url('../../images/WaveLine.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.function-container {
+    position: relative;
+    top: 80px;
+    width: 50%;
+    height: 85px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto; 
+    margin-top: 100px ;
+}
+
+.function-container > div {
+    color: white;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: calc(100%/2);
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 80px;
+    border-bottom: 5px solid gray;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bolder;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5),
+    -1px -1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.function-container > div > .icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.function-container > div.active {
+    color: gold;
+    border-bottom: 5px solid gold;
+}
+
+.tab-content {
+    position: relative;
+    top: 100px !important;
+    width: 100%;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes typing {
+    0% {
+        width: 0;
+    }
+    50% {
+        width: 100%;
+    }
+    100%{
+        width: 100%;
+    }
+}
+@keyframes borderBlink {
+    0% {
+        border-right-color: rgb(62, 204, 181);
+    }
+    50% {
+        border-right-color: transparent;
+    }
+    100% {
+        border-right-color: rgb(62, 204, 181);
+    }
+}
+.function-subtitle-text{
+    font-size: 1.5rem; 
+    color: white;
+    box-sizing: border-box;
+    border-right: 2.5px solid transparent;
+    overflow: hidden;
+    font-weight: bolder;
+    white-space: nowrap;
+    width: 0px;
+    text-align: center;
+    animation: typing 4s steps(40, end) 0.5s infinite, borderBlink 1s steps(1, end) 0.5s infinite;
+    text-shadow: 1px 1px 5px #000, 
+                -2px 2px 5px #000;
+}
+
+.level div {
+    background-color: transparent;
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    padding: 0 40px;
+    font-weight: 600;
+}
+
+.level > div:first-child {
+    margin-left: 20px;
+}
+.level > div:nth-child(2) {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.level > div:nth-child(3) {
+    margin-right: 20px;
+}
+
+.level div p:first-child {
+   margin: 0;
+   line-height: 30px;
+   font-size: 20px;
+   align-content: center;
+}
+
+.level div p:nth-child(2) {
+    line-height: 70px;
+    font-size: 48px;
+    margin: 0;
+    text-align: center;
+    align-content: center;
+}
+
+.analysis {
+    position: relative; 
+    top: 800px; 
+    background-color: rgb(246,249,255);
+}
+
+.card {
+    background-color: white;
+    width: 500px;
+    box-shadow: 1px 1px 5px lightgray;
+    border-radius: 10px;
+}
+
+

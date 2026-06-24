@@ -1,0 +1,83 @@
+.statisticsContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: #1f1f1f;
+    max-width: 1440px;
+    margin: 50px auto;
+    padding: 50px 100px;
+    border: 2px solid #353535;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.statisticsMain {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.statisticsPageTitle {
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+.statisticsSubTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgba(211, 211, 211, 0.75);
+}
+
+.cardsContainer {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 25px;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.chartsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    width: 100%;
+}
+
+.barChart {
+    flex: 1;
+    background-color: #1f1f1f;
+    border: 2px solid #353535;
+    border-radius: 15px;
+    padding: 10px; 
+    height: 500px;
+}
+
+.pieChart {
+    flex: 0.5;
+    background-color: #1f1f1f;
+    border: 2px solid #353535;
+    border-radius: 15px;
+    padding: 10px;
+    height: 500px;
+}
+
+.updateTimeBox {
+    position: absolute;
+  bottom: 20px;
+  right: 30px;
+  font-size: 14px;
+  color: #555;
+  }
+
+@media (max-width: 1450px) {
+    .pieChart {
+        flex: 1;
+    }
+}

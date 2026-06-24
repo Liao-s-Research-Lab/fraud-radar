@@ -1,0 +1,40 @@
+.promotionContainer {
+    background-image: url('/blackbg2.jpg');
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.promotionContent {
+  max-width: 1200px;
+  width: 100%;          /* 確保寬度不超出父容器 */
+  margin: 120px auto 0;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box; /* 讓 padding 算在寬度內 */
+}
+
+.newsTitle {
+  font-weight: 700;
+  color: white;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+.newsSubTitle {
+  font-weight: 700;
+  color: rgba(211, 211, 211, 0.75);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  padding-bottom: 20px;
+  border-bottom: 1px solid white;
+}
+
+.shortsBox {
+    margin-bottom: 58px;
+}
+

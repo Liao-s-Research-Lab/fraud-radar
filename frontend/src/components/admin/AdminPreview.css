@@ -1,0 +1,197 @@
+.MuiBox-root.css-8atqhb {
+    margin: 40px 0;
+    background-color: #1f1f1f;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.css-av90ce-MuiPaper-root {
+    background-color: rgba(29,29,29,0.9);
+    color: white;
+}
+
+.MuiButtonBase-root.MuiTableSortLabel-root.MuiTableSortLabel-directionAsc.css-7x9vt0-MuiButtonBase-root-MuiTableSortLabel-root,
+.MuiTableCell-root.MuiTableCell-body.MuiTableCell-paddingNone.MuiTableCell-sizeMedium.css-g42i7m-MuiTableCell-root,
+.MuiTableCell-root.MuiTableCell-body.MuiTableCell-alignRight.MuiTableCell-sizeMedium.css-3ssuu9-MuiTableCell-root,
+.MuiTablePagination-displayedRows.css-11cfq65-MuiTablePagination-displayedRows,
+.MuiTablePagination-selectLabel.css-s09cke-MuiTablePagination-selectLabel,
+.MuiSelect-select.MuiTablePagination-select.MuiSelect-standard.MuiInputBase-input.css-mmygx2-MuiSelect-select-MuiInputBase-input,
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiSelect-icon.MuiTablePagination-selectIcon.MuiSelect-iconStandard.css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon,
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorInherit.MuiIconButton-sizeMedium.css-17ixm6u-MuiButtonBase-root-MuiIconButton-root,
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-lzk69h-MuiButtonBase-root-MuiIconButton-root,
+.MuiButtonBase-root.MuiCheckbox-root.MuiCheckbox-colorPrimary.MuiCheckbox-sizeMedium.PrivateSwitchBase-root.MuiCheckbox-root.MuiCheckbox-colorPrimary.MuiCheckbox-sizeMedium.MuiCheckbox-root.MuiCheckbox-colorPrimary.MuiCheckbox-sizeMedium.css-imrjgg-MuiButtonBase-root-MuiCheckbox-root,
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiTableSortLabel-icon.MuiTableSortLabel-iconDirectionAsc.css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon,
+.MuiButtonBase-root.MuiTableSortLabel-root.Mui-active.MuiTableSortLabel-directionDesc.css-7x9vt0-MuiButtonBase-root-MuiTableSortLabel-root,
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiTableSortLabel-icon.MuiTableSortLabel-iconDirectionDesc.css-asweb8-MuiSvgIcon-root-MuiTableSortLabel-icon,
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiTableSortLabel-icon.MuiTableSortLabel-iconDirectionDesc.css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon {
+    color: white;
+    /*font-size: 20px;
+    font-weight: bolder;*/
+}
+
+.MuiTablePagination-selectLabel.css-s09cke-MuiTablePagination-selectLabel,
+.MuiTablePagination-displayedRows.css-11cfq65-MuiTablePagination-displayedRows {
+    margin: 0;
+    /*font-size: 20px;
+    font-weight: bolder;*/
+}
+
+.MuiTableCell-root.MuiTableCell-body.MuiTableCell-alignRight.MuiTableCell-sizeMedium.css-3ssuu9-MuiTableCell-root{
+    font-size: 18px;
+    font-weight:600;
+    line-height: 30px;
+}/*欄位*/
+
+.MuiTableCell-root.MuiTableCell-head.MuiTableCell-alignRight.MuiTableCell-sizeMedium.css-to33az-MuiTableCell-root{
+    font-size: 20px;
+    font-weight: bolder;
+    line-height: 30px;
+}/*標題*/
+
+.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.MuiTablePagination-toolbar.css-1gak8h1-MuiToolbar-root-MuiTablePagination-toolbar,
+.MuiTablePagination-selectLabel.css-s09cke-MuiTablePagination-selectLabel,
+.MuiTablePagination-displayedRows.css-11cfq65-MuiTablePagination-displayedRows,
+.MuiSelect-select.MuiTablePagination-select.MuiSelect-standard.MuiInputBase-input.css-mmygx2-MuiSelect-select-MuiInputBase-input,
+.MuiTypography-root.MuiTypography-subtitle1.css-t05oqc-MuiTypography-root{
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 50px;
+}/*顯示筆數那邊，跟選擇了幾筆*/
+
+.MuiButtonBase-root.Mui-disabled.MuiIconButton-root.Mui-disabled.MuiIconButton-colorInherit.MuiIconButton-sizeMedium.css-17ixm6u-MuiButtonBase-root-MuiIconButton-root {
+    color: rgb(122, 121, 121);
+}
+
+
+.adminupdate-text {
+    font-size: 20px;
+}
+
+.adminpreview-updatecheck {
+    font-size: 25px;
+    font-weight: bolder;
+    margin-bottom: 0;
+}
+
+.adminpreview-updatecheck.updatecheck-mt {
+    margin-top: 20px;
+}
+
+.adminpreview-updatecheck-confirm {
+    color: rgba(29, 29, 29, 0.9) !important;
+}
+.adminpreview-updatecheck-confirm:hover {
+    background: rgba(29, 29, 29, 0.9);
+    color: white !important;
+}
+
+.toolbar{
+    /*background-color: rgba(255, 255, 255, 0.096) !important;*/
+    border-radius: 10px 10px 0px 0px !important;
+}
+
+.none{
+    background-color: transparent !important;
+    border-radius: 10px !important;
+    border:2px solid white !important;
+    width:100% !important;
+    backdrop-filter: blur(15px);
+}
+
+.css-5hj5np-MuiToolbar-root{
+    background-color: goldenrod !important;
+}
+
+.admin-root {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    background-image: url('../../images/WaveLine.png');
+    background-size: cover;
+    background-position: center;
+    overflow-y: auto; /* 允許縱向滾動 */
+    background-repeat: no-repeat;
+}
+
+.m-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 確保在其他內容上方 */
+  }
+  
+.m-content {
+    background: white;
+    width: 600px;
+    height: 400px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.m-title{
+    font-size: 30px;
+    font-weight: bolder;
+    margin:50px;
+}
+
+.admin-col-area{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.admin-enter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 20px;
+    color: white;
+    background: goldenrod;
+    font-weight: bolder;
+    border: none;
+    letter-spacing: 0.05em;
+    border-radius: 10px;
+    width: 150px;
+    height: 70px;
+}
+
+.admin-enter:hover {
+    background: gold;
+}
+
+  .admin-jumps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 20px;
+    color: white;
+    background: gray;
+    font-weight: bolder;
+    border: none;
+    letter-spacing: 0.05em;
+    border-radius: 10px;
+    width: 150px;
+    height: 70px;
+    margin-left: 10px;
+}
+
+.admin-jumps:hover {
+    background: lightgray;
+}

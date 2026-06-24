@@ -1,0 +1,437 @@
+/* TXTReport.module.css */
+.reportContainer {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.fileInputContainer {
+    display: flex;
+    align-content: center;
+    border: 2px solid #353535;
+    border-radius: 25px;
+    overflow: hidden;
+    background-color: #000000;
+}
+
+.leftColumn {
+    flex: 1;
+    padding: 20px;
+}
+
+.rightColumn {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1f1f1f;
+    gap: 20px;
+    justify-content: center;
+    min-width: 180px;
+    border-left: 1px solid #353535;
+}
+
+.dropContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 25vh;
+    border-radius: 15px;
+    border: 1px solid #353535; 
+    box-shadow: 0px 0px 5px rgb(145, 145, 145);
+    gap: 20px;
+    background-color: #1f1f1f;
+    transition: background-color 0.3s ease-in-out;
+    margin-bottom: 20px;
+}
+
+.dropContainer:hover {
+    cursor: pointer;
+    background-color: #2e2e2e;
+}
+
+.dropTitle {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #f0f0f0;
+    font-size: 20px;
+    font-weight: 700;
+    transition: color .2s ease-in-out;
+}
+
+.dropTitleOr {
+    color: #f0f0f0;
+    font-size: 20px;
+    text-align: center;
+    transition: color .2s ease-in-out;
+}
+
+.fileInputContainer input[type="file"] {
+    width: 30%;
+    color: #444;
+    padding: 2px;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid rgba(8, 8, 8, 0.288);
+}
+
+.fileInputContainer input[type="file"]::file-selector-button {
+    margin-right: 20px;
+    border: 1px solid gray;
+    background-color: black;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.fileInputContainer input[type="file"]::file-selector-button:hover {
+    background: gold;
+}
+
+.additionalFieldContainer {
+    margin-bottom: 20px;
+}
+
+.additionalFieldContainer:last-child {
+    margin-bottom: 0;
+}
+
+.fieldLabel {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #f0f0f0;
+    display: block;
+}
+
+.inputWrapper {
+    position: relative;
+    width: 100%;
+    margin: 0;
+}
+
+.additionalTextarea {
+    overflow-y: auto;
+    outline: none; 
+    width: 100%; 
+    resize: none;
+    font-size: 18px;
+    padding: 15px;
+    border-radius: 15px;
+    background-color: #1f1f1f;
+    color: #f0f0f0;
+    border: 1px solid #353535; 
+    box-shadow: 0px 0px 5px rgb(145, 145, 145);
+    transition: border-color 0.3s ease-in-out;
+}
+
+.selectField {
+    width: 100%;
+    height: 50px;
+    font-size: 18px;
+    padding: 0 15px;
+    border-radius: 15px;
+    background-color: #1f1f1f;
+    color: #f0f0f0;
+    border: 1px solid #353535;
+    box-shadow: 0px 0px 5px rgb(145, 145, 145);
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+    cursor: pointer;
+}
+
+.selectField:focus {
+    border-color: lightgray;
+}
+
+.selectField option {
+    background-color: #1f1f1f;
+    color: #f0f0f0;
+    padding: 10px;
+}
+
+/* 下拉選單的下拉部分樣式 */
+.selectField::-ms-expand {
+    display: none;
+}
+
+/* 確保選單下拉時的樣式 */
+select.selectField {
+    z-index: 1;
+    position: relative;
+}
+
+.marginTop10 {
+    margin-top: 10px;
+}
+
+.additionalTextarea::placeholder {
+    color: rgba(211, 211, 211, 0.75);
+}
+
+.additionalTextarea:focus {
+    border-color: lightgray; 
+}
+
+.additionalTextarea::-webkit-scrollbar {
+    width: 10px;
+}
+
+.additionalTextarea::-webkit-scrollbar-thumb {
+    background: white; 
+    border-radius: 25px; 
+}
+
+.additionalTextarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.clearBtn {
+    position: absolute;
+    background-color: #353535;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    right: 15px;
+    top: 15px;
+    color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.25s linear;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clearBtn:hover {
+    color: goldenrod;
+}
+
+.btnTxtArea {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+}
+
+.txtSubmit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 20px;
+    padding: 15px;
+    color: black;
+    background-color: rgb(240, 240, 240, 0.9);
+    border: 1px solid gray;
+    letter-spacing: 0.05em;
+    border-radius: 15px;
+    width: 150px;
+    height: 50px;
+    transition: background-color 0.25s linear;
+    cursor: pointer;
+}
+
+.txtSubmit:hover {
+    background-color: white;
+}
+
+.txtSubmit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.txtSubmit > svg {
+    margin-left: 5px;
+    transform: rotate(30deg);
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.txtSubmit > span {
+    margin-left: 10px;
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.txtSubmit:hover:not(:disabled) > svg {
+    transform: translateX(5px) rotate(90deg);
+}
+
+.txtClear {
+    width: 150px;
+    height: 50px;
+    color: white;
+    border: 1px solid gray;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: bolder;
+    background-color: black;
+    transition: background-color 0.25s linear;
+    cursor: pointer;
+}
+
+.txtClear:hover {
+    background-color: rgb(41, 41, 41);
+}
+
+.txtClear:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* Loading animation */
+.bubblingG {
+    text-align: center;
+    width: 110px;
+    height: 69px;
+    margin: auto;
+}
+
+.bubblingG span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 14px;
+    height: 14px;
+    margin: 34px auto;
+    background: rgb(237,191,9);
+    border-radius: 69px;
+    -o-border-radius: 69px;
+    -ms-border-radius: 69px;
+    -webkit-border-radius: 69px;
+    -moz-border-radius: 69px;
+    animation: bubblingG 1.5s infinite alternate;
+    -o-animation: bubblingG 1.5s infinite alternate;
+    -ms-animation: bubblingG 1.5s infinite alternate;
+    -webkit-animation: bubblingG 1.5s infinite alternate;
+    -moz-animation: bubblingG 1.5s infinite alternate;
+}
+
+#bubblingG_1 {
+    animation-delay: 0s;
+    -o-animation-delay: 0s;
+    -ms-animation-delay: 0s;
+    -webkit-animation-delay: 0s;
+    -moz-animation-delay: 0s;
+}
+
+#bubblingG_2 {
+    animation-delay: 0.45s;
+    -o-animation-delay: 0.45s;
+    -ms-animation-delay: 0.45s;
+    -webkit-animation-delay: 0.45s;
+    -moz-animation-delay: 0.45s;
+}
+
+#bubblingG_3 {
+    animation-delay: 0.9s;
+    -o-animation-delay: 0.9s;
+    -ms-animation-delay: 0.9s;
+    -webkit-animation-delay: 0.9s;
+    -moz-animation-delay: 0.9s;
+}
+
+@keyframes bubblingG {
+    0% {
+        width: 14px;
+        height: 14px;
+        background-color: rgba(107,98,42,0.98);
+        transform: translateY(0);
+    }
+
+    100% {
+        width: 33px;
+        height: 33px;
+        background-color: rgb(242,230,172);
+        transform: translateY(-29px);
+    }
+}
+
+/* 回應式設計 */
+@media (max-width: 768px) {
+    .fileInputContainer {
+        flex-direction: column;
+    }
+    
+    .rightColumn {
+        min-width: 100%;
+        border-left: none;
+        border-top: 1px solid #353535;
+    }
+}
+
+.previewContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+.filePreview {
+    max-width: 90%;
+    max-height: 150px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.fileNameContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 5px;
+}
+
+.fileName {
+    font-size: 16px;
+    color: #333;
+    word-break: break-all;
+    max-width: 90%;
+    font-weight: 500;
+}
+
+.statusMessage {
+    margin-top: 15px;
+    padding: 8px 12px;
+    background-color: rgba(0, 0, 0, 0.04);
+    border-radius: 4px;
+    color: #555;
+    font-size: 14px;
+    text-align: center;
+    border-left: 3px solid #ccc;
+}
+
+.statusWarning {
+    background-color: rgba(255, 231, 217, 0.7);
+    border-left: 3px solid #ff9800;
+    color: #e65100;
+}
+
+/* 添加路徑下拉動畫 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
