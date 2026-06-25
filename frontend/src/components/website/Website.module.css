@@ -456,3 +456,14 @@ li p {
     width: 90%;
   } */
 }
+
+/* ===== 手機(≤480)整體縮小:標題/分頁/間距,避免太大太擠 ===== */
+@media (max-width: 480px) {
+  .testBox { margin-top: 80px; }
+  .testTitle { font-size: 1.6rem; line-height: 2.1rem; }
+  .testSubtitle { font-size: 0.85rem; }
+  .testTopic { gap: 8px; margin-bottom: 10px; }
+  .tabs { height: 42px; margin-top: 10px; }
+  .tabs a { font-size: 0.72rem; letter-spacing: -0.5px; }
+  .testMain { gap: 22px; }
+}

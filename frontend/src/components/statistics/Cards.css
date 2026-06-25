@@ -40,3 +40,8 @@
     background-repeat: no-repeat;
     background-position: right;
 }
+/* 手機:數據卡縮小(原本 padding 40px、字 30px 太大) */
+@media (max-width: 480px) {
+  .cardbody-custom { padding: 18px 20px !important; }
+  .cardtext-custom { height: auto; line-height: 1.5; font-size: 21px; }
+}
