@@ -776,3 +776,10 @@
     transform: rotateY(var(--angle)) translateZ(250px);
   }
 }
+/* ===== 手機縮放:標題字級,避免太大 ===== */
+@media (max-width: 480px) {
+  .homeTitle { font-size: 2.6rem; }
+  .commonFraudTitle { font-size: 1.7rem; }
+  .commonFraudSubtitle { font-size: 0.95rem; }
+  .exampleTitle { font-size: 1.55rem; }
+}

@@ -468,3 +468,165 @@ li p {
     background-color:  black;
     padding: 50px 0;
 }
+/* ---- 響應式 RWD(由 website 版補入,讓 report 在手機正常)---- */
+@media (max-width: 1217px) {
+.stepsMain {
+    margin: 70px 30px 0; 
+  }
+}
+@media (max-width: 1024px) {
+  .stepsTitle > h2 {
+    font-size: 2.5rem; 
+  }
+
+  .stepsDescription ul li {
+    padding: 20px 0px 50px 120px;
+  }
+
+  .iconHolder {
+    width: 90px;
+    height: 90px;
+  }
+
+  .iconHolder::before {
+    width: 65px;
+    height: 65px;
+  }
+
+  .iconHolder > span {
+    font-size: 1.4rem;
+  }
+
+  li h4 {
+    font-size: 1.2rem;
+  }
+
+  li p {
+    font-size: 18px;
+    line-height: 32px;
+  }
+
+  .stepsProgress {
+    left: 40px;
+  }
+
+  .stepsDescription ul li::before {
+    left: 40px;
+  }
+
+  .testBox {
+    margin-top: 10vh; /* 減少上邊距 */
+  }
+
+  .tabs {
+    width: 100%; /* 滿版 tabs */
+    height: 45px;
+  }
+
+  .tabs a {
+    font-size: 1.1rem;
+    width: 50%; 
+  }
+
+  /* .content {
+    width: 80%; 
+  } */
+}
+
+
+@media (max-width: 768px) {
+  .stepsMain {
+    margin: 50px 20px 0; 
+  }
+
+  .stepsTitle > h2 {
+    font-size: 2rem; 
+  }
+
+  .stepsDescription ul li {
+    padding: 20px 0px 40px 90px; 
+  }
+
+  .iconHolder {
+    width: 70px;
+    height: 70px;
+  }
+
+  .iconHolder::before {
+    width: 50px;
+    height: 50px;
+  }
+
+  .iconHolder > span {
+    font-size: 1.2rem;
+  }
+
+  li h4 {
+    font-size: 1rem;
+  }
+
+  li p {
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  .stepsProgress {
+    left: 30px; 
+  }
+
+  .stepsDescription ul li::before {
+    left: 30px;
+  }
+
+  .testBox {
+    margin-top: 8vh;
+  }
+
+  .testTitle {
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 3.5rem;
+  }
+
+  .testSubtitle {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .tabs {
+    height: auto;
+    width: 100%;
+  }
+
+  .tabs a {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 1rem;
+  }
+
+
+  /* .content {
+    width: 90%;
+  } */
+}
+
+/* 手機:步驟區原本保留側邊 500px 給影片，窄螢幕會把文字壓爆，改滿版 */
+@media (max-width: 900px) {
+  .stepsMain { max-width: 100%; }
+}
+
+/* 手機:回報表單容器給明確寬度，避免巢狀 flex 塌縮成窄條 */
+@media (max-width: 900px) {
+  /* 回報表單(content)用 vw 給明確寬度，避免巢狀 flex 百分比解析失效塌成窄條 */
+  .content { width: 90vw !important; max-width: 420px; }
+}
+
+/* ===== 手機縮放:回報頁標題/步驟標題,避免太大 ===== */
+@media (max-width: 480px) {
+  .testBox { margin-top: 80px; }
+  .testTitle { font-size: 1.5rem; line-height: 2rem; }
+  .stepsTitle > h2 { font-size: 1.6rem; }
+}
+
+/* 手機:testContainer 桌機用的 10rem 左右 padding 在手機會擠爆內容,改小 */
+@media (max-width: 768px) {
+  .testContainer { padding-left: 16px !important; padding-right: 16px !important; }
+}

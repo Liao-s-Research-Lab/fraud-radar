@@ -181,3 +181,9 @@
     color: rgba(255, 255, 255, 0.5);
     cursor: not-allowed;
 }
+/* ===== 手機:表單改直排(輸入區在上、按鈕在下),避免左右擠扁 ===== */
+@media (max-width: 768px) {
+  .msgInput { flex-direction: column; }
+  .inputsArea { width: 100%; }
+  .btnArea { flex-direction: row; min-width: 0; width: 100%; justify-content: center; gap: 1rem; margin-top: 8px; }
+}

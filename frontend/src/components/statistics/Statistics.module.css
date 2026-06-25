@@ -81,3 +81,20 @@
         flex: 1;
     }
 }
+/* ===== 手機縮放:標題/說明/間距,避免太大太擠 ===== */
+@media (max-width: 768px) {
+  .statisticsContainer { padding: 28px 16px; }
+  .statisticsMain { padding: 0; }
+  .statisticsPageTitle { font-size: 1.8rem; }
+  .statisticsSubTitle { font-size: 0.95rem; line-height: 1.7; }
+}
+@media (max-width: 480px) {
+  .statisticsPageTitle { font-size: 1.55rem; }
+  .statisticsSubTitle { font-size: 0.9rem; }
+}
+
+/* 手機:統計標題/說明再縮一點 */
+@media (max-width: 480px) {
+  .statisticsPageTitle { font-size: 1.4rem; }
+  .statisticsSubTitle { font-size: 0.82rem; line-height: 1.6; }
+}

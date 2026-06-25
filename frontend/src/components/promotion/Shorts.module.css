@@ -314,3 +314,8 @@
     flex: 0 0 80%;
   }
 }
+/* ===== 手機:短影音每支改約 78% 寬(原本 1/4 太細),可橫滑 ===== */
+@media (max-width: 768px) {
+  .shortsVideo { flex: 0 0 78%; }
+  .shortsVideoThumbnail { height: 62vh; max-height: 460px; }
+}

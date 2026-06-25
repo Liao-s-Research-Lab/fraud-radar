@@ -138,3 +138,19 @@
     transform: scale(1);
   }
 }
+/* 手機:檢測結果改單欄堆疊(分數→詳情→第三區),避免並排被擠成直排 */
+@media (max-width: 768px) {
+  .rating-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "first"
+      "second"
+      "third";
+    height: auto;
+    overflow-y: visible;
+    gap: 16px 0;
+  }
+  .container-3 { height: auto; }
+  .prevent { font-size: 16px; }
+}

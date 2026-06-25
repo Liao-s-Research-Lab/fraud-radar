@@ -33,11 +33,11 @@ function Report() {
   const getTabStyle = () => {
     switch (activeTab) {
         case "text":
-            return { width: "300px", left: "0" };
+            return { width: "50%", left: "0" };
         case "file":
-            return { width: "300px", left: "295px" };
+            return { width: "50%", left: "50%" };
         default:
-            return { width: "150px", left: "0" };
+            return { width: "50%", left: "0" };
     }
   };
 
