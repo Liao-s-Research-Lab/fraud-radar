@@ -517,3 +517,15 @@
         background-position: 40px 40px;
     }
 } */
+/* ===== 手機:標題加寬避免換行、內容內距收緊 ===== */
+@media (max-width: 480px) {
+  .quizTitle { width: 74%; height: auto; padding: 8px 12px; font-size: 2.1rem; }
+  .quizContent { width: 90%; padding: 16px; gap: 18px; }
+  .quizContentLeft { padding: 14px; flex: 1 1 100%; }
+  .quizContentRight { padding: 16px; gap: 18px; flex: 1 1 100%; }
+}
+
+/* 手機:標題強制一行,不換行 */
+@media (max-width: 480px) {
+  .quizTitle { width: 86%; font-size: 1.7rem; white-space: nowrap; }
+}
