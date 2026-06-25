@@ -524,3 +524,17 @@
   justify-content: space-between;
   margin-top: 8px;
 }
+/* ===== 手機重排:結果頁(原本絕對定位+4rem/8rem 大字→跑版重疊)===== */
+@media (max-width: 768px) {
+  .finalContent { width: 92%; height: auto; max-height: 84vh; padding: 18px; gap: 18px; }
+  .finalResultsTitle { width: auto; max-width: 92%; font-size: 1.7rem; padding: 8px 18px; }
+  .fraudType { font-size: 1rem; line-height: 1.8rem; }
+  .levelTitle { font-size: 1.05rem; }
+  .scores, .incorrectClicks { font-size: 17px; }
+  .front > div { gap: 14px; flex-wrap: wrap; }
+  .back > .reviewButton { width: auto; }
+  .reviewButton { font-size: 15px; }
+  .nextStage p:nth-child(1) { font-size: 2.6rem; }
+  .nextStage p:nth-child(2) { font-size: 1.1rem; }
+  .conversationReview { margin: 14px 8px 0; }
+}
