@@ -544,3 +544,10 @@
   /* 情境切換大標題縮小 */
   .temptitle { font-size: 2rem !important; }
 }
+
+/* 手機:過渡大標題(測驗一)8rem 太大;角色圖保持比例不壓扁 */
+@media (max-width: 768px) {
+  .nextStage p:nth-child(1) { font-size: 2.6rem; }
+  .nextStage p:nth-child(2) { font-size: 1.1rem; }
+  .characterLeftImage, .characterRightImage { width: auto; max-width: 100%; object-fit: contain; }
+}

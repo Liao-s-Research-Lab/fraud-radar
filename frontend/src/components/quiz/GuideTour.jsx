@@ -18,9 +18,17 @@ function GuideTour({ steps, run, setIsGuideTourActive }) {
             zIndex: 99
         },
         spotlight: {
-            borderRadius: "5px", 
-            border: "3px solid lightgray", 
-        }
+            borderRadius: "5px",
+            border: "3px solid lightgray",
+        },
+        // 手機上限制提示框寬度,避免整個框與按鈕超出畫面、點不到
+        tooltip: {
+            maxWidth: "90vw",
+            boxSizing: "border-box",
+        },
+        tooltipContent: {
+            padding: "14px",
+        },
     }
 
     const handleJoyrideCallback = (event) => {
