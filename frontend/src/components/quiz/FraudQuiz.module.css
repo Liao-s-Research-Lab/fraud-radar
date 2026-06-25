@@ -500,3 +500,47 @@
 .investmentFraud {
     background-image: url('/bank.jpg');
 }
+/* ============================================================
+   手機(≤768)重排:遊戲對話畫面為直向手機可用
+   ============================================================ */
+@media (max-width: 768px) {
+  /* 對話框:移除桌機的 200px 大內距(就是它讓文字塌成直排)*/
+  .dialogueBox {
+    width: 96%;
+    padding: 12px 16px;
+    height: auto;
+    min-height: 20vh;
+  }
+  .dialogueText { padding-left: 0; font-size: 16px; line-height: 1.5; }
+  .question { font-size: 16px; margin-top: 10px; }
+
+  /* 角色名牌:移除會變負值的 margin-left calc */
+  .characterName1, .characterName2 {
+    width: auto;
+    padding: 2px 14px;
+    font-size: 0.95rem;
+    transform: translateY(-28px);
+  }
+  .characterName2 { margin-left: 0; }
+
+  /* 角色 + 聊天紀錄:聊天面板給足寬度(原本被角色擠窄→泡泡直排)*/
+  .content { gap: 6px; }
+  .characterLeft { width: 26%; }
+  .records { margin: 0 6px; height: 74%; flex: 1 1 auto; min-width: 0; }
+  .recordsHeader { padding: 0 12px; }
+  .recordsContent { padding: 0 12px; }
+  .recordsLeftText, .recordsRightText { max-width: 90%; font-size: 15px; }
+
+  /* 選項按鈕:改全寬直排、好點 */
+  .options { display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: stretch; }
+  .option { width: 100%; font-size: 15px; padding: 10px 12px; }
+
+  /* 情境介紹彈窗:字縮小(JSX 用 inline 50px/30px,需 !important)*/
+  .backStory { width: 90%; height: auto; max-height: 80vh; padding: 20px; overflow-y: auto; }
+  .backStory p { font-size: 18px !important; line-height: 1.5; }
+  .backStory p:first-of-type { font-size: 24px !important; }
+  .kickOff button { font-size: 16px; }
+
+  /* 情境切換大標題縮小 */
+  .temptitle { font-size: 2rem !important; }
+}
