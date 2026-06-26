@@ -523,11 +523,18 @@
   }
   .characterName2 { margin-left: 0; }
 
-  /* 角色 + 聊天紀錄:聊天面板給足寬度(原本被角色擠窄→泡泡直排)*/
-  .content { gap: 6px; }
-  .characterLeft { width: 26%; }
-  .records { margin: 0 6px; height: 74%; flex: 1 1 auto; min-width: 0; }
-  .recordsHeader { padding: 0 12px; }
+  /* 角色 + 聊天紀錄:兩側角色固定寬度不被壓縮(原本右角色被 flex-shrink 擠成 79px 貼邊),聊天面板吃剩餘空間 */
+  .content { gap: 4px; }
+  .characterLeft  { flex: 0 0 22%; width: 22%; justify-content: center; }
+  .characterRight { flex: 0 0 22%; width: 22%; justify-content: center; }
+  .records { margin: 0 4px; height: 74%; flex: 1 1 0; min-width: 0; }
+  /* 聊天標頭:縮小頭像/電話/視訊/選單 icon + 收 gap,讓「賣家」「上線中」能橫向顯示完整(原本被擠成直排只露 家/上)*/
+  .recordsHeader { padding: 0 8px; gap: 4px; }
+  .recordsHeader > svg { font-size: 30px !important; flex: 0 0 auto; }
+  .state { margin-left: 6px; min-width: 0; flex: 1 1 auto; }
+  .state p { white-space: nowrap; }
+  .function { gap: 8px; flex: 0 0 auto; }
+  .function svg { font-size: 20px !important; }
   .recordsContent { padding: 0 12px; }
   .recordsLeftText, .recordsRightText { max-width: 90%; font-size: 15px; }
 

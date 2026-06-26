@@ -61,7 +61,7 @@ function FraudQuiz() {
     },
     {
       target: "#records",
-      placement: "right",
+      placement: typeof window !== "undefined" && window.innerWidth <= 768 ? "center" : "right",
       content: (
         <>
           <p style={{fontSize: '20px'}}><b>紀錄框：顯示當前的對話紀錄。</b></p>
@@ -577,6 +577,7 @@ const handleNextStage = () => {
             <button onClick={() => {
               setHiddenDuringTransition(false);
               setShowBackStory(false);
+              setShowRecords(true);
               togglePlayBgm();
               }}>
                 開始測驗
@@ -710,7 +711,7 @@ const handleNextStage = () => {
         
         {!hiddenDuringTransition && (
           <div className={styles.characterRight}>
-              <img src={`/${characterInformation.selectedRole}.PNG`}   alt="Character 2" className={`${styles.characterRightImage} ${allScripts[fraudType][currentConversation].script[currentIndex]?.character === "character2" ? styles.myturn : null}`} />
+              <img src={`/${characterInformation.selectedRole}.PNG`} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/c1.PNG"; }}   alt="Character 2" className={`${styles.characterRightImage} ${allScripts[fraudType][currentConversation].script[currentIndex]?.character === "character2" ? styles.myturn : null}`} />
           </div>
         )}
       </div>
