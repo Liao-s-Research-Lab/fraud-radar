@@ -1,0 +1,11 @@
+<resources>
+  <string name="app_name">app</string>
+  <string name="expo_system_ui_user_interface_style" translatable="false">automatic</string>
+  <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
+  <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
+
+  <!-- 懸浮窗截圖偵測的後端位址(原生端,對應 JS 的 mobile/config/api.js)
+       上線(HF Space):https://mintguess-fraud-radar.hf.space
+       本機測試改:      http://10.0.2.2:3000 -->
+  <string name="api_base_url" translatable="false">https://mintguess-fraud-radar.hf.space</string>
+</resources>

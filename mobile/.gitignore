@@ -31,6 +31,20 @@ yarn-error.*
 
 # local env files
 .env*.local
+# 注意:mobile/.env 只放「公開的後端網址」(EXPO_PUBLIC_*,非機密),
+# 故刻意「不」忽略,讓 clone 下來即指向線上後端。
+
+# logs(建置/啟動暫存)
+*.log
+
+# Android build 產物(原生原始碼要進版控,只忽略產物)
+android/.gradle/
+android/build/
+android/app/build/
+android/app/.cxx/
+android/.kotlin/
+*.keystore
+!debug.keystore
 
 # typescript
 *.tsbuildinfo
