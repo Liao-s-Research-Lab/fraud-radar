@@ -16,7 +16,7 @@ import theme, { accents } from '../../constants/theme';
 const AItem = Animated.createAnimatedComponent(Pressable);
 
 const features = [
-  { key: 'check', route: '/check', icon: 'scan', title: '詐騙檢測', desc: '網址 / 簡訊 / 文字 / 圖片', color: accents.check },
+  { key: 'check', route: '/check', icon: 'scan', title: '詐騙檢測', desc: '網址 / 文字 / 圖片 / 檔案', color: accents.check },
   { key: 'stats', route: '/statistics', icon: 'stats', title: '統計圖表', desc: '各類詐騙趨勢數據', color: accents.stats },
   { key: 'method', route: '/method', icon: 'warning', title: '常見手法', desc: '最新詐騙手法情報', color: accents.method },
   { key: 'game', route: '/game', icon: 'shield', title: '詐騙測驗', desc: '情境演練 + PR 評等', color: '#5BBF8A' },

@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, Image, ImageBackground, Dimensions } from 'react-native';
 import Animated, { FadeInDown, FadeIn } from 'react-native-reanimated';
 import Icon from '../Icon';
-import theme from '../../constants/theme';
+import RadarView from '../RadarView';
+import theme, { accents } from '../../constants/theme';
 import { FRAUD_TYPES, ALL_SCRIPTS } from './quizData';
 import { db, auth } from '../firebase/firebase';
 import { doc, getDoc, setDoc, collection, addDoc, getDocs } from 'firebase/firestore';
@@ -54,7 +55,7 @@ function Avatar({ source, size }) {
 const calcScore = (err) => Math.max(0, 100 - err * 20);
 
 export default function Game() {
-  const [phase, setPhase] = useState('setup'); // setup | story | play | results
+  const [phase, setPhase] = useState('home'); // home | setup | story | play | results
   const [avatarIdx, setAvatarIdx] = useState(0);
   const [nicknameInput, setNicknameInput] = useState('');
   const [nickname, setNickname] = useState('');
@@ -229,6 +230,45 @@ export default function Game() {
     setPhase('setup'); setFraudType(null); setConv(0); setErrors([0, 0, 0]);
     setNickname(''); setNicknameInput(''); resetConv(); resetStats();
   };
+
+  // ===================== 中介首頁(遊戲入口) =====================
+  if (phase === 'home') {
+    const steps = [
+      { n: '1', t: '選角色 + 挑一種詐騙類型', ic: 'scan', c: theme.primary },
+      { n: '2', t: '讀對話,抓出詐騙的關鍵句', ic: 'warning', c: accents.method },
+      { n: '3', t: '看分數、PR 值與防詐評等', ic: 'stats', c: accents.stats },
+    ];
+    return (
+      <ScrollView style={styles.screen} contentContainerStyle={styles.ghWrap} showsVerticalScrollIndicator={false}>
+        <Animated.View entering={FadeIn.duration(500)} style={styles.ghHero}>
+          <RadarView size={168} />
+        </Animated.View>
+        <Animated.View entering={FadeInDown.delay(120)} style={styles.ghTitleWrap}>
+          <Text style={styles.ghTitle}>詐騙測驗</Text>
+          <Text style={styles.ghTitleEn}>SCAM SURVIVAL</Text>
+        </Animated.View>
+        <Animated.Text entering={FadeInDown.delay(200)} style={styles.ghTagline}>你能在關鍵時刻識破騙局嗎?</Animated.Text>
+
+        <View style={styles.ghSteps}>
+          {steps.map((s, i) => (
+            <Animated.View key={s.n} entering={FadeInDown.delay(280 + i * 90)} style={styles.ghStep}>
+              <View style={[styles.ghStepIcon, { backgroundColor: s.c + '22', borderColor: s.c + '66' }]}><Icon name={s.ic} size={20} color={s.c} /></View>
+              <Text style={styles.ghStepText}>{s.t}</Text>
+              <Text style={[styles.ghStepNo, { color: s.c }]}>{s.n}</Text>
+            </Animated.View>
+          ))}
+        </View>
+
+        <Animated.View entering={FadeInDown.delay(560)}>
+          <Pressable style={styles.ghStart} onPress={() => setPhase('setup')} android_ripple={{ color: '#0003' }}>
+            <Icon name="play" size={20} color="#15171C" />
+            <Text style={styles.ghStartText}>開始挑戰</Text>
+          </Pressable>
+          <Text style={styles.ghFoot}>4 種詐騙類型 · 每類 3 個真實情境</Text>
+        </Animated.View>
+      </ScrollView>
+    );
+  }
 
   // ===================== 設定:角色 + 暱稱 + 類型 =====================
   if (phase === 'setup') {
@@ -625,6 +665,22 @@ const styles = StyleSheet.create({
   content: { padding: 18, paddingBottom: 40 },
   h1: { color: theme.text, fontSize: 24, fontWeight: '800', marginTop: 8 },
   sub: { color: theme.textDim, fontSize: 13, marginTop: 4, marginBottom: 8 },
+
+  // 中介首頁(遊戲入口)
+  ghWrap: { flexGrow: 1, justifyContent: 'center', padding: 24, paddingVertical: 32 },
+  ghHero: { alignItems: 'center' },
+  ghTitleWrap: { alignItems: 'center', marginTop: 4 },
+  ghTitle: { color: theme.text, fontSize: 34, fontWeight: '900', letterSpacing: 4 },
+  ghTitleEn: { color: theme.primary, fontSize: 11, fontWeight: '800', letterSpacing: 6, marginTop: 3 },
+  ghTagline: { color: theme.textDim, fontSize: 15, textAlign: 'center', marginTop: 12, marginBottom: 26 },
+  ghSteps: { gap: 10, marginBottom: 28 },
+  ghStep: { flexDirection: 'row', alignItems: 'center', gap: 13, backgroundColor: theme.card, borderRadius: 14, borderWidth: 1, borderColor: theme.border, paddingVertical: 13, paddingHorizontal: 14 },
+  ghStepIcon: { width: 40, height: 40, borderRadius: 11, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  ghStepText: { flex: 1, color: theme.text, fontSize: 14.5, fontWeight: '600' },
+  ghStepNo: { fontSize: 24, fontWeight: '900', opacity: 0.45 },
+  ghStart: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, backgroundColor: theme.primary, borderRadius: 16, paddingVertical: 17, elevation: 4, shadowColor: theme.primary, shadowOpacity: 0.4, shadowRadius: 10, shadowOffset: { width: 0, height: 4 } },
+  ghStartText: { color: '#15171C', fontSize: 18, fontWeight: '900', letterSpacing: 2 },
+  ghFoot: { color: theme.textFaint, fontSize: 12, textAlign: 'center', marginTop: 14 },
 
   sectionRow: { flexDirection: 'row', alignItems: 'center', marginTop: 22, marginBottom: 14 },
   bar: { width: 4, height: 16, borderRadius: 2, backgroundColor: theme.primary, marginRight: 8 },

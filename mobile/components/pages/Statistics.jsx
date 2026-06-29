@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import { BarChart, PieChart } from 'react-native-chart-kit';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import theme from '../../constants/theme';
@@ -23,6 +23,7 @@ const shortLabel = (t) => (t || '').replace('詐騙', '').slice(0, 4);
 
 export default function Statistics() {
   const [data, setData] = useState([]);
+  const [topKeyword, setTopKeyword] = useState('-');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,6 +40,14 @@ export default function Statistics() {
         arr.sort((a, b) => b.frequency - a.frequency);
         setData(arr);
       } catch (e) { /* 無網路時略過 */ }
+      // 熱門詐騙關鍵字(KeywordFrequency/KeywordStats:{ 關鍵字: 次數 })
+      try {
+        const ks = await getDoc(doc(db, 'KeywordFrequency', 'KeywordStats'));
+        if (ks.exists()) {
+          const sorted = Object.entries(ks.data()).sort((a, b) => b[1] - a[1]);
+          if (sorted.length) setTopKeyword(sorted[0][0]);
+        }
+      } catch (e) { /* 略過 */ }
       setLoading(false);
     })();
   }, []);
@@ -68,7 +77,7 @@ export default function Statistics() {
 
       <View style={styles.summaryRow}>
         <View style={styles.summaryCard}><Text style={styles.sNum}>{total.toLocaleString()}</Text><Text style={styles.sLabel}>總通報數</Text></View>
-        <View style={styles.summaryCard}><Text style={styles.sNum}>{data.length}</Text><Text style={styles.sLabel}>詐騙類型</Text></View>
+        <View style={styles.summaryCard}><Text style={[styles.sNum, { fontSize: 15 }]} numberOfLines={1}>{topKeyword}</Text><Text style={styles.sLabel}>熱門關鍵字</Text></View>
         <View style={styles.summaryCard}><Text style={[styles.sNum, { fontSize: 15 }]} numberOfLines={1}>{top5[0]?.type || '-'}</Text><Text style={styles.sLabel}>最高風險</Text></View>
       </View>
 

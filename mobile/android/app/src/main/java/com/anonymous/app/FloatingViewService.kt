@@ -2,6 +2,7 @@ package com.anonymous.app
 
 import android.animation.ObjectAnimator
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -30,8 +31,10 @@ import android.util.Log
 import android.view.*
 import android.view.animation.LinearInterpolator
 import android.view.animation.OvershootInterpolator
+import android.content.res.ColorStateList
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import org.json.JSONObject
@@ -71,6 +74,8 @@ class FloatingViewService : Service() {
     private var virtualDisplay: VirtualDisplay? = null
     @Volatile private var captureRequested = false
     @Volatile private var busy = false
+    @Volatile private var cancelRequested = false
+    private var currentConn: HttpURLConnection? = null
     private var scrW = 0
     private var scrH = 0
     private var scrDensity = 0
@@ -107,7 +112,8 @@ class FloatingViewService : Service() {
                     }
                 }, mainHandler)
                 setupCaptureSession()  // 建立持續截取工作階段(只授權這一次)
-                requestCapture()       // 立即做第一次偵測
+                // 授權後「不」立刻截圖(太突然);提示就緒,等使用者自己點氣泡
+                Toast.makeText(this, "懸浮偵測已就緒,點氣泡開始偵測", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "未取得螢幕截取授權", Toast.LENGTH_SHORT).show()
             }
@@ -143,7 +149,7 @@ class FloatingViewService : Service() {
         // 點氣泡 = 截圖偵測。已建立截取階段就直接截,不再每次跳授權框
         bubble.setOnClickListener {
             if (busy) {
-                Toast.makeText(this, "偵測中,請稍候…", Toast.LENGTH_SHORT).show()
+                showStopDialog()  // 偵測中再點 → 問要不要停止這次檢測
             } else if (virtualDisplay != null && mediaProjection != null) {
                 Toast.makeText(this, "偵測中…", Toast.LENGTH_SHORT).show()
                 requestCapture()
@@ -155,7 +161,7 @@ class FloatingViewService : Service() {
             }
         }
 
-        // 拖曳(可分辨點擊與拖曳)
+        // 拖曳:往下拖會出現「暫停 / 移除」兩個目標,放到哪個就做哪個
         bubble.setOnTouchListener(object : View.OnTouchListener {
             var initialX = 0
             var initialY = 0
@@ -202,30 +208,57 @@ class FloatingViewService : Service() {
         })
     }
 
-    // ---------------- 拖曳移除區 ----------------
+    // 偵測中再點氣泡 → 詢問是否停止這次檢測
+    private fun showStopDialog() {
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("停止檢測")
+            .setMessage("這次檢測還在進行中,要停止嗎?")
+            .setPositiveButton("停止") { _, _ -> cancelDetection() }
+            .setNegativeButton("繼續等待", null)
+            .create()
+        dialog.window?.setType(
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+            else
+                @Suppress("DEPRECATION") WindowManager.LayoutParams.TYPE_PHONE
+        )
+        dialog.show()
+    }
 
-    private fun buildRemoveView(): View {
-        val size = dp(76f)
-        val bg = GradientDrawable().apply {
-            shape = GradientDrawable.OVAL
-            setColor(Color.parseColor("#B3D9685A"))
-            setStroke(dp(2f), Color.parseColor("#FFFFFF"))
-        }
-        removeBg = bg
-        return TextView(this).apply {
-            text = "✕"
-            setTextColor(Color.WHITE)
-            textSize = 30f
-            gravity = Gravity.CENTER
-            background = bg
-            width = size
-            height = size
+    // 取消這次檢測:中斷連線、停止 loading、還原氣泡
+    private fun cancelDetection() {
+        cancelRequested = true
+        captureRequested = false
+        Thread { try { currentConn?.disconnect() } catch (_: Exception) {} }.start()
+        mainHandler.post {
+            floatingView?.visibility = View.VISIBLE
+            stopBubbleLoading()
+            Toast.makeText(this, "已停止這次檢測", Toast.LENGTH_SHORT).show()
         }
     }
 
+    // ---------------- 拖曳移除區 ----------------
+
+    private val REMOVE_DIM = "#B3D9685A"; private val REMOVE_HI = "#F0D9685A"
+
     private fun showRemoveZone() {
         if (removeView == null) {
-            val v = buildRemoveView()
+            val size = dp(76f)
+            val bg = GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                setColor(Color.parseColor(REMOVE_DIM))
+                setStroke(dp(2f), Color.parseColor("#FFFFFF"))
+            }
+            removeBg = bg
+            val v = TextView(this).apply {
+                text = "✕"
+                setTextColor(Color.WHITE)
+                textSize = 30f
+                gravity = Gravity.CENTER
+                background = bg
+                width = size
+                height = size
+            }
             removeView = v
             val lp = WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -252,18 +285,16 @@ class FloatingViewService : Service() {
         removeBg = null
     }
 
-    // 判斷氣泡是否拖到移除區上方,並給回饋(放大 + 變更透明度)
     private fun updateOverRemove(bubbleCx: Int, bubbleCy: Int) {
         val rv = removeView ?: return
         val loc = IntArray(2)
         rv.getLocationOnScreen(loc)
         val rcx = loc[0] + rv.width / 2
         val rcy = loc[1] + rv.height / 2
-        val over = hypot((bubbleCx - rcx).toDouble(), (bubbleCy - rcy).toDouble()) < dp(75f)
+        val over = hypot((bubbleCx - rcx).toDouble(), (bubbleCy - rcy).toDouble()) < dp(72f)
         if (over != overRemove) {
             overRemove = over
-            // 不縮放(會被視窗裁成方形),改用變色回饋:移上去變實心亮紅
-            removeBg?.setColor(Color.parseColor(if (over) "#F0D9685A" else "#B3D9685A"))
+            removeBg?.setColor(Color.parseColor(if (over) REMOVE_HI else REMOVE_DIM))
             bubbleImage?.alpha = if (over) 0.4f else 1f
         }
     }
@@ -353,6 +384,7 @@ class FloatingViewService : Service() {
     private fun requestCapture() {
         if (virtualDisplay == null) return
         busy = true
+        cancelRequested = false
         floatingView?.visibility = View.GONE
         mainHandler.postDelayed({ captureRequested = true }, 220)
     }
@@ -383,6 +415,14 @@ class FloatingViewService : Service() {
         loadingAnimator?.cancel()
         loadingAnimator = null
         bubbleImage?.rotation = 0f
+    }
+
+    // 等比縮小到最長邊不超過 maxDim,加速 OCR 與上傳
+    private fun scaleDown(bmp: Bitmap, maxDim: Int): Bitmap {
+        val m = maxOf(bmp.width, bmp.height)
+        if (m <= maxDim) return bmp
+        val r = maxDim.toFloat() / m
+        return Bitmap.createScaledBitmap(bmp, (bmp.width * r).toInt(), (bmp.height * r).toInt(), true)
     }
 
     private fun imageToBitmap(image: Image, width: Int, height: Int): Bitmap {
@@ -421,8 +461,10 @@ class FloatingViewService : Service() {
                 val url = URL("$baseUrl/api/fetch-content")
                 val boundary = "----FraudRadar${System.currentTimeMillis()}"
 
+                // 縮圖加速:全螢幕截圖很大(OCR + 上傳都慢),長邊壓到 ~1280
+                val scaled = scaleDown(bitmap, 1280)
                 val baos = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos)
+                scaled.compress(Bitmap.CompressFormat.JPEG, 80, baos)
                 val imageBytes = baos.toByteArray()
 
                 val conn = (url.openConnection() as HttpURLConnection).apply {
@@ -432,6 +474,7 @@ class FloatingViewService : Service() {
                     readTimeout = 120000  // 後端 OCR+Gemini 可能要 ~60 秒,給足時間避免逾時放棄
                     setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
                 }
+                currentConn = conn  // 供「停止檢測」中斷用
 
                 DataOutputStream(conn.outputStream).use { out ->
                     // 來源欄位(後端會讀 from,可選)
@@ -453,6 +496,8 @@ class FloatingViewService : Service() {
                 val response = stream.bufferedReader().use { it.readText() }
                 Log.d(TAG, "fetch-content response: $response")
 
+                if (cancelRequested) return@Thread  // 使用者已停止,不顯示結果
+
                 val data = JSONObject(response)
                 val pythonResult = data.optJSONObject("pythonResult")
                 if (pythonResult != null) {
@@ -464,11 +509,14 @@ class FloatingViewService : Service() {
                     }
                 }
             } catch (e: Exception) {
+                if (cancelRequested) return@Thread  // 中斷連線造成的例外,忽略
                 Log.e(TAG, "upload error", e)
                 mainHandler.post {
                     stopBubbleLoading()
                     Toast.makeText(this, "檢測失敗:${e.message}(後端是否開著?)", Toast.LENGTH_LONG).show()
                 }
+            } finally {
+                currentConn = null
             }
         }.start()
     }
@@ -500,6 +548,8 @@ class FloatingViewService : Service() {
 
         val resultText = view.findViewById<TextView>(R.id.result_text)
         val rateText = view.findViewById<TextView>(R.id.rate_text)
+        val rateRing = view.findViewById<ProgressBar>(R.id.rate_ring)
+        val emotionText = view.findViewById<TextView>(R.id.emotion_text)
         val keywordText = view.findViewById<TextView>(R.id.keyword_text)
         val typeText = view.findViewById<TextView>(R.id.type_text)
         val remindText = view.findViewById<TextView>(R.id.remind_text)
@@ -529,8 +579,34 @@ class FloatingViewService : Service() {
             fraudRate >= 30 -> "需留意,有疑慮"
             else -> "風險較低"
         }
-        rateText.text = "詐騙率 ${"%.0f".format(fraudRate)}%"
+        val emotion = pythonResult.optString("Emotion", "")
+        val target = fraudRate.toInt()
+        val cLow = Color.parseColor("#3FBF7F")
+        val cMid = Color.parseColor("#E0A93C")
+        val cHigh = Color.parseColor("#E5534B")
+        val argb = android.animation.ArgbEvaluator()
+        fun colorAt(v: Int): Int {
+            val f = v / 100f
+            return if (f < 0.5f) argb.evaluate(f / 0.5f, cLow, cMid) as Int
+            else argb.evaluate((f - 0.5f) / 0.5f, cMid, cHigh) as Int
+        }
+        val finalColor = colorAt(target)
+        // 數字 0→target、環同步、顏色一路漸變(綠→金→紅)
+        val anim = android.animation.ValueAnimator.ofInt(0, target)
+        anim.duration = 1100
+        anim.interpolator = android.view.animation.DecelerateInterpolator()
+        anim.addUpdateListener { a ->
+            val v = a.animatedValue as Int
+            rateRing.progress = v
+            rateText.text = "$v%"
+            val col = colorAt(v)
+            rateText.setTextColor(col)
+            rateRing.progressTintList = ColorStateList.valueOf(col)
+        }
+        anim.start()
         resultText.text = if (fraudResult.isNotBlank() && fraudResult != "未檢測到") "$verdict · $fraudResult" else verdict
+        resultText.setTextColor(finalColor)
+        emotionText.text = "情緒:${emotion.ifBlank { "無" }}"
         keywordText.text = "關鍵詞:${keywords.filter { it.isNotBlank() }.joinToString(", ").ifEmpty { "無" }}"
         typeText.text = "類型:${types.filter { it.isNotBlank() }.joinToString(", ").ifEmpty { "無" }}"
         remindText.text = "提醒:${reminds.filter { it.isNotBlank() }.joinToString(" / ").ifEmpty { "—" }}"
