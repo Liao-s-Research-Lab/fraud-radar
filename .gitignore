@@ -44,5 +44,5 @@ backend/config/*.json
 frontend/public/demo.mp4
 frontend/public/demotest.mp4
 
-# 舊版手機專案殘骸(獨立 repo,已搬進 mobile/)
-app/
+# 舊版手機專案殘骸(獨立 repo,已搬進 mobile/)— 僅忽略「根目錄」的 app/,別誤傷 mobile/android/app/
+/app/

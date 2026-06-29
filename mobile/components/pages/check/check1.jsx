@@ -1,67 +1,108 @@
 import React, { useState, useRef } from 'react';
 import {
   View, Text, StyleSheet, TextInput, Pressable, ScrollView,
-  KeyboardAvoidingView, Platform, ActivityIndicator, Image,
+  KeyboardAvoidingView, Platform, ActivityIndicator, Image, Alert,
 } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 import Animated, { FadeInDown, FadeIn } from 'react-native-reanimated';
 import Icon from '../../Icon';
+import CircularScore from '../../CircularScore';
 import API from '../../../config/api';
 import theme, { accents } from '../../../constants/theme';
 
 const TYPES = [
   { key: 'URL', label: '網址', icon: 'scan', hint: '貼上可疑網址' },
   { key: 'TXT', label: '文字', icon: 'shield', hint: '貼上對話 / 新聞 / 內容' },
-  { key: 'MSG', label: '簡訊', icon: 'warning', hint: '貼上簡訊內容' },
   { key: 'IMG', label: '圖片', icon: 'radar', hint: '選擇截圖 / 圖片' },
+  { key: 'FILE', label: '檔案', icon: 'news', hint: '選擇檔案' },
 ];
 
 const GUIDE = [
   { t: '網址檢測', d: '可疑連結、釣魚網站、假購物站', icon: 'scan', c: accents.check },
-  { t: '文字檢測', d: '對話、新聞、貼文內容分析', icon: 'shield', c: theme.gold },
-  { t: '簡訊檢測', d: '可疑簡訊、包裹/帳單通知', icon: 'warning', c: accents.float },
+  { t: '文字檢測', d: '對話、新聞、簡訊、貼文內容分析', icon: 'shield', c: theme.gold },
   { t: '圖片檢測', d: '截圖、對話圖、廣告圖 OCR 偵測', icon: 'radar', c: accents.stats },
+  { t: '檔案檢測', d: 'PDF / TXT / 圖片檔上傳分析', icon: 'news', c: accents.float },
 ];
 
 export default function CheckScreen() {
   const [type, setType] = useState('URL');
   const [text, setText] = useState('');
   const [image, setImage] = useState(null);
+  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
+  const abortRef = useRef(null);
 
   const reset = () => { setResult(null); setError(''); };
 
+  // 檢測中再按一次 → 詢問是否停止
+  const confirmStop = () => {
+    Alert.alert('停止檢測', '這次檢測還在進行中,要停止嗎?', [
+      { text: '繼續等待', style: 'cancel' },
+      { text: '停止', style: 'destructive', onPress: () => abortRef.current?.abort() },
+    ]);
+  };
+
+  // 改用 SAF(DocumentPicker)選圖:系統相片選擇器在多數裝置/模擬器會「點了不選取」,SAF 穩定可靠
   const pickImage = async () => {
     reset();
-    const res = await ImagePicker.launchImageLibraryAsync({ quality: 0.7 });
-    if (!res.canceled) setImage(res.assets[0]);
+    try {
+      const res = await DocumentPicker.getDocumentAsync({ type: 'image/*', copyToCacheDirectory: true });
+      if (res.canceled) return;
+      const a = res.assets && res.assets[0];
+      if (a && a.uri) setImage(a);
+      else setError('沒有取得圖片');
+    } catch (e) {
+      setError('選圖失敗:' + (e?.message || e));
+    }
+  };
+
+  const pickFile = async () => {
+    reset();
+    try {
+      const res = await DocumentPicker.getDocumentAsync({ type: '*/*', copyToCacheDirectory: true });
+      if (res.canceled) return;
+      const a = res.assets && res.assets[0];
+      if (a && a.uri) setFile(a);
+      else setError('沒有取得檔案');
+    } catch (e) {
+      setError('選檔失敗:' + (e?.message || e));
+    }
   };
 
   const detect = async () => {
     reset();
+    const controller = new AbortController();
+    abortRef.current = controller;
     setLoading(true);
     try {
       let res;
-      if (type === 'IMG') {
-        if (!image) { setError('請先選擇圖片'); setLoading(false); return; }
+      if (type === 'IMG' || type === 'FILE') {
+        const asset = type === 'IMG' ? image : file;
+        if (!asset) { setError(type === 'IMG' ? '請先選擇圖片' : '請先選擇檔案'); setLoading(false); return; }
         const form = new FormData();
-        form.append('files[]', { uri: image.uri, name: 'upload.jpg', type: image.type || 'image/jpeg' });
-        res = await fetch(API.fetchContent, { method: 'POST', body: form });
+        form.append('files[]', {
+          uri: asset.uri,
+          name: asset.name || (type === 'IMG' ? 'upload.jpg' : 'upload'),
+          type: asset.mimeType || (type === 'IMG' ? 'image/jpeg' : 'application/octet-stream'),
+        });
+        res = await fetch(API.fetchContent, { method: 'POST', body: form, signal: controller.signal });
       } else {
         if (!text.trim()) { setError('請先輸入內容'); setLoading(false); return; }
         const body = type === 'URL' ? { url: text.trim() } : { text: text.trim() };
         res = await fetch(API.fetchContent, {
-          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: controller.signal,
         });
       }
       const data = await res.json();
       if (data.pythonResult) setResult(data.pythonResult);
       else setError('未取得偵測結果');
     } catch (e) {
-      setError('連線失敗:後端未啟動或網路不通(' + e.message + ')');
+      if (e.name === 'AbortError') { /* 使用者停止,不顯示錯誤 */ }
+      else setError('連線失敗:後端未啟動或網路不通(' + e.message + ')');
     }
+    abortRef.current = null;
     setLoading(false);
   };
 
@@ -107,6 +148,21 @@ export default function CheckScreen() {
               </>
             )}
           </Pressable>
+        ) : type === 'FILE' ? (
+          <Pressable style={styles.imgPick} onPress={pickFile}>
+            {file ? (
+              <View style={{ alignItems: 'center', paddingHorizontal: 16 }}>
+                <Icon name="news" size={40} color={theme.primary} />
+                <Text style={[styles.imgHint, { color: theme.text }]} numberOfLines={1}>{file.name}</Text>
+                <Text style={styles.imgHint}>點此可重新選擇</Text>
+              </View>
+            ) : (
+              <>
+                <Icon name="news" size={40} color={theme.textFaint} />
+                <Text style={styles.imgHint}>點此選擇檔案(PDF / TXT / 圖片)</Text>
+              </>
+            )}
+          </Pressable>
         ) : (
           <TextInput
             style={styles.input}
@@ -119,9 +175,9 @@ export default function CheckScreen() {
         )}
 
         {/* 偵測按鈕 */}
-        <Pressable style={({ pressed }) => [styles.btn, pressed && { opacity: 0.85 }]} onPress={detect} disabled={loading}>
+        <Pressable style={({ pressed }) => [styles.btn, pressed && { opacity: 0.85 }]} onPress={loading ? confirmStop : detect}>
           {loading ? <ActivityIndicator color={theme.bg} /> : <Icon name="scan" size={20} color={theme.bg} />}
-          <Text style={styles.btnText}>{loading ? '掃描中…' : '開始偵測'}</Text>
+          <Text style={styles.btnText}>{loading ? '檢測中…(點此可停止)' : '開始偵測'}</Text>
         </Pressable>
 
         {!!error && <Text style={styles.error}>{error}</Text>}
@@ -130,10 +186,7 @@ export default function CheckScreen() {
         {result && (
           <Animated.View entering={FadeInDown} style={[styles.resultCard, { borderColor: rateColor + '66' }]}>
             <View style={styles.gaugeRow}>
-              <View style={[styles.gauge, { borderColor: rateColor }]}>
-                <Text style={[styles.gaugeNum, { color: rateColor }]}>{rate.toFixed(0)}</Text>
-                <Text style={styles.gaugeUnit}>% 風險</Text>
-              </View>
+              <CircularScore value={rate} size={108} label="風險" />
               <View style={{ flex: 1, marginLeft: 16 }}>
                 <Text style={[styles.verdict, { color: rateColor }]}>
                   {danger ? '⚠ 高風險,極可能是詐騙' : mid ? '需留意,有疑慮' : '風險較低'}

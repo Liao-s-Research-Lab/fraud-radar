@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Image, Linking } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Image, Linking, ActivityIndicator } from 'react-native';
+import { WebView } from 'react-native-webview';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import Icon from '../Icon';
 import { getInfoData, subscribeInfo, loadInfoData } from '../infoStore';
@@ -9,11 +10,17 @@ function videoMeta(url = '') {
   if (/youtu\.?be|youtube/.test(url)) {
     const m = url.match(/(?:v=|\/shorts\/|youtu\.be\/|embed\/)([\w-]{11})/);
     const id = m && m[1];
-    return { platform: 'YouTube', color: '#E5534B', thumb: id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null };
+    return { platform: 'YouTube', color: '#E5534B', thumb: id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null, embed: null };
   }
-  if (/tiktok/.test(url)) return { platform: 'TikTok', color: theme.text, thumb: null };
-  if (/instagram/.test(url)) return { platform: 'Instagram', color: accents.float, thumb: null };
-  return { platform: '影片', color: theme.primary, thumb: null };
+  if (/tiktok/.test(url)) {
+    const m = url.match(/video\/(\d+)/);
+    return { platform: 'TikTok', color: '#2DD4BF', thumb: null, embed: m ? `https://www.tiktok.com/player/v1/${m[1]}` : null };
+  }
+  if (/instagram/.test(url)) {
+    const m = url.match(/(reel|p|tv)\/([\w-]+)/);
+    return { platform: 'Instagram', color: '#E1568F', thumb: null, embed: m ? `https://www.instagram.com/${m[1]}/${m[2]}/embed` : null };
+  }
+  return { platform: '影片', color: theme.primary, thumb: null, embed: null };
 }
 
 export default function Info() {
@@ -46,11 +53,33 @@ export default function Info() {
                 <Pressable style={styles.vCard} onPress={() => Linking.openURL(v.url)}>
                   <View style={styles.vThumbWrap}>
                     {m.thumb ? (
-                      <Image source={{ uri: m.thumb }} style={styles.vThumb} resizeMode="cover" />
+                      <>
+                        <Image source={{ uri: m.thumb }} style={styles.vThumb} resizeMode="cover" />
+                        <View style={styles.playBadge}><Icon name="play" size={18} color="#fff" /></View>
+                      </>
+                    ) : m.embed ? (
+                      <View style={styles.vThumb} pointerEvents="none">
+                        <WebView
+                          source={{ uri: m.embed }}
+                          style={styles.vThumb}
+                          scrollEnabled={false}
+                          javaScriptEnabled
+                          domStorageEnabled
+                          mediaPlaybackRequiresUserAction
+                          startInLoadingState
+                          renderLoading={() => (
+                            <View style={[styles.vThumb, styles.vThumbPh, styles.vThumbAbs, { backgroundColor: m.color + '22' }]}>
+                              <ActivityIndicator color={m.color} />
+                            </View>
+                          )}
+                        />
+                      </View>
                     ) : (
-                      <View style={[styles.vThumb, styles.vThumbPh]}><Icon name="play" size={34} color={theme.text} /></View>
+                      <View style={[styles.vThumb, styles.vThumbPh, { backgroundColor: m.color + '26' }]}>
+                        <View style={[styles.vPhCircle, { backgroundColor: m.color }]}><Icon name="play" size={24} color="#fff" /></View>
+                        <Text style={[styles.vPhText, { color: m.color }]}>{m.platform}</Text>
+                      </View>
                     )}
-                    <View style={styles.playBadge}><Icon name="play" size={18} color="#fff" /></View>
                     <View style={[styles.platTag, { backgroundColor: m.color }]}><Text style={styles.platText}>{m.platform}</Text></View>
                   </View>
                 </Pressable>
@@ -66,7 +95,7 @@ export default function Info() {
         <Text style={styles.empty}>目前無新聞(需網路連線載入)</Text>
       ) : (
         news.map((n, i) => (
-          <Animated.View key={n.id} entering={FadeInDown.delay(i * 50)}>
+          <Animated.View key={i} entering={FadeInDown.delay(i * 50)}>
             <Pressable style={styles.news} onPress={() => n.link && Linking.openURL(n.link)}>
               {!!n.image && <Image source={{ uri: n.image }} style={styles.newsImg} resizeMode="cover" />}
               <Text style={styles.newsTitle} numberOfLines={3}>{n.title}</Text>
@@ -91,7 +120,10 @@ const styles = StyleSheet.create({
   vCard: { marginRight: 12, width: 150 },
   vThumbWrap: { width: 150, height: 250, borderRadius: 14, overflow: 'hidden', backgroundColor: theme.card, borderWidth: 1, borderColor: theme.border },
   vThumb: { width: '100%', height: '100%' },
-  vThumbPh: { alignItems: 'center', justifyContent: 'center', backgroundColor: theme.cardHi },
+  vThumbPh: { alignItems: 'center', justifyContent: 'center', gap: 10 },
+  vThumbAbs: { position: 'absolute', top: 0, left: 0 },
+  vPhCircle: { width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
+  vPhText: { fontSize: 14, fontWeight: '800' },
   playBadge: {
     position: 'absolute', top: '50%', left: '50%', marginLeft: -22, marginTop: -22,
     width: 44, height: 44, borderRadius: 22, backgroundColor: 'rgba(0,0,0,0.55)',

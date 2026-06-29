@@ -26,15 +26,45 @@
             android:gravity="center"
             android:layout_marginBottom="12dp" />
 
-        <TextView
-            android:id="@+id/rate_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="#F2873E"
-            android:layout_marginBottom="6dp" />
+        <FrameLayout
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="2dp">
+
+            <ProgressBar
+                android:id="@+id/rate_ring"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:max="100"
+                android:progress="0"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/overlay_ring" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/rate_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="34sp"
+                    android:textStyle="bold"
+                    android:textColor="#F2873E" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="詐騙率"
+                    android:textSize="12sp"
+                    android:textColor="#9A9AA4" />
+            </LinearLayout>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/result_text"
@@ -42,8 +72,21 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="15sp"
+            android:textStyle="bold"
             android:textColor="#ECECEE"
+            android:layout_marginTop="6dp"
             android:layout_marginBottom="14dp" />
+
+        <TextView
+            android:id="@+id/emotion_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/overlay_box_bg"
+            android:padding="12dp"
+            android:textColor="#ECECEE"
+            android:textSize="14sp"
+            android:lineSpacingExtra="3dp"
+            android:layout_marginBottom="8dp" />
 
         <TextView
             android:id="@+id/keyword_text"
