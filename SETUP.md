@@ -113,13 +113,32 @@ python app1.py               # → http://localhost:5000
 
 ### 5. 手機 App（選配，`mobile/`）
 
+> ⚠️ 專案路徑須為**純 ASCII**（例如 `C:\mobile`）；中文路徑會讓 Gradle 編碼錯誤而 build 失敗。
+
 ```bash
 cd mobile
-npm install          # ⚠️ 一次
-npx expo start
+npm install              # ⚠️ 一次
+npx expo run:android     # debug 版（連 Metro）
 ```
 
-> 手機 App 需在後端服務執行中才能進行偵測。原專案的懸浮視窗（FloatingViewService.kt）與 `screenshot.py` 需要把程式內的本機 IP 換成你當下的位址，細節見 `docs/` 內的安裝說明。
+**後端位址（兩處，預設已指向線上 HF Space `mintguess-fraud-radar.hf.space`）：**
+
+| 位置 | 用途 |
+|------|------|
+| `.env` 的 `EXPO_PUBLIC_API_BASE_URL` | JS 端（App 內檢測頁） |
+| `android/app/src/main/res/values/strings.xml` 的 `api_base_url` | 原生端（懸浮窗截圖偵測） |
+
+本機測試後端時改成：模擬器 `http://10.0.2.2:3000`、實機 `http://<電腦區網IP>:3000`。
+
+**打包可發布 APK：**
+
+```bash
+npx expo run:android --variant release
+# 產物：android/app/build/outputs/apk/release/app-release.apk（直接傳人安裝，或丟 GitHub Releases）
+```
+
+> 懸浮偵測用 Android `MediaProjection`（不需再手動改 IP）；首次於首頁「開啟懸浮偵測」會引導授權「顯示在其他應用程式上層」。
+> iOS 不支援懸浮（平台限制，無法截別的 App 畫面 / 系統浮窗），iPhone 用戶改用**網頁版**即可（同一後端）。
 
 ---
 
