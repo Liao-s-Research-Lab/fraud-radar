@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 外圈光暈 -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#33F2873E" />
+        </shape>
+    </item>
+    <!-- 主體深色圓 + 橘色描邊 -->
+    <item android:left="5dp" android:top="5dp" android:right="5dp" android:bottom="5dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="34dp"
+                android:startColor="#222836"
+                android:endColor="#12151C" />
+            <stroke android:width="2dp" android:color="#F2873E" />
+        </shape>
+    </item>
+</layer-list>
