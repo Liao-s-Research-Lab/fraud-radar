@@ -20,7 +20,7 @@
 | 前端 | `frontend/` | Vite + React | 5173 | `npm run dev` |
 | 後端 API | `backend/` | Next.js 14 | 3000 | `npm run dev` |
 | AI 偵測服務 | `backend/python/` | Flask + PyTorch/BERT | 5000 | `python app1.py` |
-| 手機 App（選配） | `mobile/` | Expo / React Native | — | `npx expo start` |
+| 手機 App（選配） | `mobile/` → `C:\mobile` | Expo / React Native（Android） | — | `npx expo run:android` |
 
 前端 Vite 已設定 proxy：`/api` → `http://localhost:3000`（Next.js）。新聞牆資料由 Next.js 的 `/api/news` 路由提供。**前端、Next.js、Flask 三個服務需同時執行**系統才完整運作。
 
@@ -113,13 +113,27 @@ python app1.py               # → http://localhost:5000
 
 ### 5. 手機 App（選配，`mobile/`）
 
-> ⚠️ 專案路徑須為**純 ASCII**（例如 `C:\mobile`）；中文路徑會讓 Gradle 編碼錯誤而 build 失敗。
+> ⚠️ 專案路徑須為**純 ASCII**；中文路徑會讓 Gradle 編碼錯誤而 build 失敗。
+> 因此 App 原始碼實際放在 **`C:\mobile`**，本 repo 的 `mobile/` 只是指向它的 Windows Junction
+> （用 `mklink /J mobile C:\mobile` 建立；clone 到新電腦後需自行重建，或直接在 `C:\mobile` 開發）。
+
+**只是想裝來用**：直接安裝已打包好的 release APK，不需 Metro、不需啟動本機後端
+（API 已指向線上 HF Space）。
 
 ```bash
-cd mobile
-npm install              # ⚠️ 一次
-npx expo run:android     # debug 版（連 Metro）
+adb install -r C:\mobile\android\app\build\outputs\apk\release\app-release.apk
+# 或把該 apk 傳給手機自行安裝（對方需允許「未知來源」）
 ```
+
+**要開發 / 改程式**：
+
+```bash
+cd C:\mobile
+npm install              # ⚠️ 一次
+npx expo run:android     # debug 版（連 Metro）；需先接實機開 USB 偵錯或開啟模擬器
+```
+
+> 用 `adb devices` 確認裝置有被抓到再跑。改過 `.env` 要用 `npx expo start -c` 清快取才會生效。
 
 **後端位址（兩處，預設已指向線上 HF Space `mintguess-fraud-radar.hf.space`）：**
 
@@ -134,8 +148,10 @@ npx expo run:android     # debug 版（連 Metro）
 
 ```bash
 npx expo run:android --variant release
-# 產物：android/app/build/outputs/apk/release/app-release.apk（直接傳人安裝，或丟 GitHub Releases）
+# 產物：C:\mobile\android\app\build\outputs\apk\release\app-release.apk（直接傳人安裝，或丟 GitHub Releases）
 ```
+
+> App **不會**隨 push 自動部署（自動部署的只有網頁與後端的 HF Space）；改完要自己重新打包 APK 再發布。
 
 > 懸浮偵測用 Android `MediaProjection`（不需再手動改 IP）；首次於首頁「開啟懸浮偵測」會引導授權「顯示在其他應用程式上層」。
 > iOS 不支援懸浮（平台限制，無法截別的 App 畫面 / 系統浮窗），iPhone 用戶改用**網頁版**即可（同一後端）。

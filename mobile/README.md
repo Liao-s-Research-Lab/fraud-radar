@@ -11,7 +11,9 @@
 
 ## 開發環境需求
 - Node 18+、Android Studio(SDK / 模擬器或實機)、JDK 17。
-- ⚠️ 專案路徑請放在**純 ASCII 路徑**(例如 `C:\mobile`);中文路徑會讓 Gradle 編碼錯誤而 build 失敗。
+- ⚠️ 專案路徑請放在**純 ASCII 路徑**;中文路徑會讓 Gradle 編碼錯誤而 build 失敗。
+  因此本 App 實際放在 **`C:\mobile`**,主專案(`...\桌面\騙局雷達\`)裡的 `mobile/` 只是指向它的
+  Windows Junction(`mklink /J mobile C:\mobile`)。換電腦 clone 後需自行重建連結,或直接在 `C:\mobile` 開發。
 
 ## 後端位址設定(API)
 App 兩處要指向同一個後端,預設已指向線上 HF Space:
@@ -24,11 +26,22 @@ App 兩處要指向同一個後端,預設已指向線上 HF Space:
 本機測試後端時改成:模擬器 `http://10.0.2.2:3000`、實機 `http://<電腦區網IP>:3000`
 (連 http 明文需在 Manifest 開 `usesCleartextTraffic`;HF 是 https 則免)。
 
+## 只是想裝來用(不改程式)
+安裝已打包好的 release APK 即可,不需 Metro、不需啟動本機後端(API 已指向線上 HF Space):
+```bash
+adb install -r C:\mobile\android\app\build\outputs\apk\release\app-release.apk
+```
+或把該 apk 直接傳給手機自行安裝(對方需允許「未知來源」)。
+
 ## 啟動 / 開發
 ```bash
-npm install
+cd C:\mobile
+npm install                     # ⚠️ 一次
+adb devices                     # 先確認實機(USB 偵錯)或模擬器有被抓到
 npx expo run:android            # debug 版,連 Metro
 ```
+- 改過 `.env` 要 `npx expo start -c` 清快取才會生效;改 `strings.xml` 則要重 build。
+- build 卡住/怪錯誤時:`cd android; .\gradlew.bat clean`,再重跑上面指令。
 
 ## 打包可發布的 APK(正式版)
 ```bash

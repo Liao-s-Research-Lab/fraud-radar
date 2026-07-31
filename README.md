@@ -59,6 +59,10 @@
 ### 📊 詐騙統計圖表
 - 以數據卡、長條圖與圓餅圖呈現詐騙趨勢與分布，並顯示資料最後更新時間，一眼掌握整體態勢。
 
+### 📱 Android App（懸浮一鍵偵測）
+- 與網頁版共用同一後端與 Firebase，並多了網頁做不到的**懸浮氣泡**：以原生 `MediaProjection` 截取當前整個手機畫面上傳偵測，結果直接浮層顯示，不必離開 LINE／訊息 App。
+- iOS 因平台限制無法截取其他 App 畫面，iPhone 使用者改用網頁版即可。詳見 [mobile/README.md](mobile/README.md)。
+
 ---
 
 ## ⚙️ 偵測運作原理
@@ -94,10 +98,11 @@
 | 前端 | `frontend/` | Vite + React | 5173 |
 | 後端 API | `backend/` | Next.js 14 | 3000 |
 | AI 偵測服務 | `backend/python/` | Flask + PyTorch / BERT | 5000 |
-| 手機 App（選配） | `mobile/` | Expo / React Native | — |
+| 手機 App（選配） | `mobile/` → `C:\mobile` | Expo / React Native（Android） | — |
 
 > 前端 Vite 已設定 proxy：`/api` → Next.js（3000）；新聞牆資料由 Next.js 的 `/api/news` 路由提供。
 > **前端、Next.js、Flask 三個服務需同時執行**系統才完整運作。
+> 手機 App 原始碼實際位於 `C:\mobile`（Gradle 不吃中文路徑），repo 內的 `mobile/` 是指向它的 Junction。
 
 ---
 
@@ -125,6 +130,14 @@ npm run dev     # 同時啟動 前端(5173) + Next.js(3000) + Flask(5000)
 
 啟動後開啟 **http://localhost:5173** 即可使用。
 
+手機 App（Android）只想直接安裝的話，裝現成的 release APK 即可（不需啟動任何本機服務）：
+
+```bash
+adb install -r C:\mobile\android\app\build\outputs\apk\release\app-release.apk
+```
+
+要改 App 程式則 `cd C:\mobile && npx expo run:android`，細節見 [mobile/README.md](mobile/README.md)。
+
 ---
 
 ## 📁 目錄結構
@@ -139,7 +152,7 @@ npm run dev     # 同時啟動 前端(5173) + Next.js(3000) + Flask(5000)
 │   ├── app/             Next.js 路由與 API（fetch-content、news）
 │   ├── config/          Firebase Admin 金鑰
 │   └── python/          Flask AI 偵測服務與訓練腳本
-├── mobile/              手機 App（Expo，選配）
+├── mobile/              手機 App（Expo，選配）→ Junction 指向 C:\mobile
 ├── docs/                專題文件、操作／安裝說明、資料庫匯出
 └── credentials/         其他金鑰與備援碼
 ```

@@ -22,12 +22,16 @@ from roletest import interactive_input
 from ocr import process_images  # 啟動時就載入 PaddleOCR（原本在 predict() 內 lazy import，第一次圖片偵測才初始化）
 
 
+_warm = {'text': False, 'ocr': False}  # 給 /health 回報預熱進度用
+
+
 def _warmup():
     """背景預熱：用假資料把各模型先各跑一次，避免第一筆「真正的」偵測卡在冷啟動。"""
     try:
         get_and_match_keywords_with_details("您好")
         predict_fraud_probability("您好")
         interactive_input("您好")
+        _warm['text'] = True
         print("[warmup] 文字模型預熱完成")
     except Exception as e:
         print(f"[warmup] 文字模型預熱略過：{e}")
@@ -35,6 +39,7 @@ def _warmup():
         import numpy as _np
         from ocr import perform_ocr
         perform_ocr(_np.full((60, 200, 3), 255, dtype=_np.uint8))  # 白圖暖機
+        _warm['ocr'] = True
         print("[warmup] OCR 預熱完成")
     except Exception as e:
         print(f"[warmup] OCR 預熱略過：{e}")
@@ -42,6 +47,38 @@ def _warmup():
 
 import threading as _threading
 _threading.Thread(target=_warmup, daemon=True).start()
+
+
+_START_TS = __import__('time').time()
+
+
+def _rss_mb():
+    """本行程的常駐記憶體（MB）。只讀 /proc，不需 psutil；非 Linux 回 None。"""
+    try:
+        with open('/proc/self/status') as f:
+            for line in f:
+                if line.startswith('VmRSS:'):
+                    return round(int(line.split()[1]) / 1024, 1)
+    except Exception:
+        pass
+    return None
+
+
+@app.route('/health', methods=['GET'])
+def health():
+    """給監控用的輕量檢查：不碰模型、不做推論，純粹證明 Flask 這支還活著。
+
+    warm 只是「預熱是否跑完」的資訊欄位，不影響存活判斷 —— 剛重啟時
+    warm 還是 false 但服務本身是好的（只是第一筆偵測會慢）。
+    """
+    import time as _t
+    return jsonify({
+        'ok': True,
+        'service': 'flask',
+        'warm': dict(_warm),
+        'rssMB': _rss_mb(),
+        'uptimeSec': round(_t.time() - _START_TS),
+    })
 
 
 
