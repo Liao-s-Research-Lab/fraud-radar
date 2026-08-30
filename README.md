@@ -13,19 +13,17 @@
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 
-**[線上試用 →](https://mintguess-fraud-radar.hf.space)**
-
 <table>
 <tr>
 <td align="center" valign="top">
-<img src="https://raw.githubusercontent.com/Liao-s-Research-Lab/fraud-radar/main/docs/screenshots/home-desktop.png" alt="網頁版首頁" width="600"><br>
-<sub><b>網頁版</b> · 貼文字／網址／截圖即時偵測</sub>
+<img src="https://raw.githubusercontent.com/Liao-s-Research-Lab/fraud-radar/main/docs/screenshots/home-desktop.png" alt="網頁版首頁" width="644">
+<br><sub><b>網頁版</b> · 貼文字／網址／截圖即時偵測</sub><br><br>
+<a href="https://mintguess-fraud-radar.hf.space"><img src="https://img.shields.io/badge/🌐_線上試用-→-1F6FEB?style=for-the-badge" alt="線上試用"></a>
 </td>
 <td align="center" valign="top">
-<img src="https://raw.githubusercontent.com/Liao-s-Research-Lab/fraud-radar/main/docs/screenshots/app-home.png" alt="Android App 首頁" width="190"><br>
-<sub><b>Android App</b> · 懸浮一鍵偵測</sub>
-<br><br>
-<a href="#-手機-app-安裝android"><img src="https://img.shields.io/badge/📱_安裝_Android_App-→-F97316?style=for-the-badge" alt="安裝 Android App"></a>
+<img src="https://raw.githubusercontent.com/Liao-s-Research-Lab/fraud-radar/main/docs/screenshots/app-home.png" alt="Android App 首頁" width="190">
+<br><sub><b>Android App</b> · 懸浮一鍵偵測</sub><br><br>
+<a href="#-手機-app-安裝android"><img src="https://img.shields.io/badge/📱_安裝_App-→-F97316?style=for-the-badge" alt="安裝 Android App"></a>
 </td>
 </tr>
 </table>
