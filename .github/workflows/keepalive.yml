@@ -1,0 +1,102 @@
+name: Keepalive & Auto-restart HF Space
+
+# 目的有兩個，缺一不可：
+#   1. 保活：HF 免費 Space 連續 48 小時（gcTimeout 172800）無請求就會 SLEEPING。
+#      定時打一下就永遠碰不到門檻。
+#   2. 自救：Space 若卡在 RUNTIME_ERROR / SLEEPING 起不來，外部監控（UptimeRobot 等）
+#      只會通知，沒有能力重啟。這裡用 HF_TOKEN 直接呼叫 restart API 把它拉起來。
+#
+# 為什麼不靠 UptimeRobot 保活就好：冷啟動要約 110 秒，這段期間 /api/health 依設計回 503，
+# UptimeRobot 30 秒逾時必然判 down、狂發假警報，實務上很快就會被忽略或停用。
+
+on:
+  schedule:
+    - cron: '0 * * * *'     # 每小時。實測約每 24 小時就會掛一次，6 小時一輪會讓中斷拖太久。
+  workflow_dispatch:         # 也可以到 Actions 頁面手動觸發
+
+# 同時只跑一個，避免排程延遲時疊在一起重複重啟
+concurrency:
+  group: keepalive
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 喚醒並等待 Space 就緒（不行就重啟）
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_SPACE: mintguess/fraud-radar
+          HEALTH_URL: https://mintguess-fraud-radar.hf.space/api/health
+        run: |
+          pip install -q huggingface_hub requests
+          python - <<'PY'
+          import os, sys, time, json, requests
+          from huggingface_hub import HfApi
+
+          SPACE  = os.environ["HF_SPACE"]
+          URL    = os.environ["HEALTH_URL"]
+          TOKEN  = os.environ.get("HF_TOKEN") or None
+          api    = HfApi(token=TOKEN)
+
+          # 冷啟動實測約 110 秒到 Flask ready、150 秒預熱完成。
+          # 給到 6 分鐘，避免正常的慢啟動被誤判成故障而觸發不必要的重啟。
+          DEADLINE   = 360
+          RESTARTED  = False
+
+          def stage():
+              try:
+                  return api.get_space_runtime(SPACE).stage
+              except Exception as e:
+                  return f"UNKNOWN({e})"
+
+          def probe():
+              """回 (是否完全健康, 說明字串)。任何 HTTP 回應都代表容器活著。"""
+              try:
+                  r = requests.get(URL, timeout=30)
+              except Exception as e:
+                  return False, f"無回應：{type(e).__name__}"
+              try:
+                  d = r.json()
+              except Exception:
+                  return False, f"HTTP {r.status_code}（非 JSON，可能是 HF 的等待頁）"
+              py  = d.get("python", {})
+              mem = d.get("memory") or {}
+              info = (f"HTTP {r.status_code} flask={py.get('status')} "
+                      f"warm={py.get('warm')} rss={py.get('rssMB')}MB "
+                      f"容器={mem.get('usedMB')}/{mem.get('limitMB')}MB({mem.get('percent')}%)")
+              return bool(d.get("ok")), info
+
+          print(f"起始 stage = {stage()}", flush=True)
+          start = time.time()
+
+          while True:
+              ok, info = probe()
+              elapsed = int(time.time() - start)
+              print(f"[{elapsed:>3}s] {info}", flush=True)
+
+              if ok:
+                  print("✅ Space 健康（Flask 已就緒）")
+                  sys.exit(0)
+
+              if elapsed > DEADLINE:
+                  break
+
+              # 逾時過半還沒好 → 看容器層狀態，卡在錯誤/休眠就主動重啟一次
+              if not RESTARTED and elapsed > DEADLINE // 2:
+                  st = stage()
+                  print(f"仍未就緒，容器 stage = {st}", flush=True)
+                  if st in ("RUNTIME_ERROR", "BUILD_ERROR", "SLEEPING", "PAUSED", "STOPPED"):
+                      if not TOKEN:
+                          print("⚠️ 未設定 HF_TOKEN，無法自動重啟")
+                      else:
+                          print(f"→ 呼叫 restart_space({SPACE})", flush=True)
+                          api.restart_space(SPACE)
+                          RESTARTED = True
+                          start = time.time()   # 重啟後重新計時，給它完整的冷啟動時間
+              time.sleep(20)
+
+          print(f"❌ 逾時：{DEADLINE} 秒內未就緒，最終 stage = {stage()}")
+          print("   若 stage 是 BUILD_ERROR，多半是 Dockerfile / 依賴問題，重啟救不了，要看 HF build log。")
+          sys.exit(1)   # 讓這次 workflow 標記失敗，GitHub 會寄信通知你
+          PY
