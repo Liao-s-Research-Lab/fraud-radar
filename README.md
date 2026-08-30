@@ -13,10 +13,22 @@
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 
-
 **[線上試用 →](https://mintguess-fraud-radar.hf.space)**
 
-<img src="https://raw.githubusercontent.com/Liao-s-Research-Lab/fraud-radar/main/docs/screenshots/home-desktop.png" alt="騙局雷達首頁" width="900">
+<table>
+<tr>
+<td align="center" valign="top">
+<img src="https://raw.githubusercontent.com/Liao-s-Research-Lab/fraud-radar/main/docs/screenshots/home-desktop.png" alt="網頁版首頁" width="600"><br>
+<sub><b>網頁版</b> · 貼文字／網址／截圖即時偵測</sub>
+</td>
+<td align="center" valign="top">
+<img src="https://raw.githubusercontent.com/Liao-s-Research-Lab/fraud-radar/main/docs/screenshots/app-home.png" alt="Android App 首頁" width="190"><br>
+<sub><b>Android App</b> · 懸浮一鍵偵測</sub>
+<br><br>
+<a href="#-手機-app-安裝android"><img src="https://img.shields.io/badge/📱_安裝_Android_App-→-F97316?style=for-the-badge" alt="安裝 Android App"></a>
+</td>
+</tr>
+</table>
 </div>
 
 ---
@@ -121,6 +133,7 @@
 | 資料庫 / 雲端 | Firebase Firestore、Firebase Admin SDK |
 
 ---
+
 ## 🚀 快速開始
 
 詳細的安裝、啟動、模型與金鑰設定步驟請見 **[SETUP.md](SETUP.md)**。
@@ -163,7 +176,6 @@ npx expo run:android
 > **iPhone 使用者**：iOS 平台限制無法截取其他 App 的畫面，因此沒有懸浮偵測功能，請改用
 > [網頁版](https://mintguess-fraud-radar.hf.space)，功能完全相同。
 
-
 ## 📁 目錄結構
 
 ```
@@ -191,60 +203,15 @@ npx expo run:android
 
 ## 👥 團隊與分工
 
-天主教輔仁大學 資訊管理學系 第 42 屆專題　指導教授：**廖建翔 教授**
+天主教輔仁大學 資訊管理學系 第 42 屆專題　·　指導教授：**廖建翔 教授**
 
-| | 姓名 |
+| 成員 | 負責項目 |
 |---|---|
-| 組長 | 曾詰淩 |
-| 組員 | 余政佑、徐子崴、黃予岑、梁瑜芳 |
-
-### 程式分工
-
-標記說明：**★** 主要負責人　**○** 參與　**UI** 介面設計　**DB** 資料庫設計
-
-| 工作項目 | 曾詰淩 | 余政佑 | 徐子崴 | 黃予岑 | 梁瑜芳 |
-|---|:---:|:---:|:---:|:---:|:---:|
-| **常見手法** |
-| 常見類型之敘述及圖片 | | UI ★ | | | |
-| 實際案例 | | UI ★ | | | |
-| **防詐檢測** |
-| 文字檢測 | | UI | ★ | ★ | DB |
-| 網址檢測 | | UI | ★ | ★ | DB |
-| 圖片、檔案檢測 | | UI | ★ | ★ | DB |
-| **檢測結果** |
-| 顯示詐騙類型 | | UI | ★ | ★ | DB |
-| 準確度回報 | | UI | ★ | ★ | DB |
-| **統計類型比例** |
-| 統計使用者檢測過之詐騙類型 | | UI | ○ | | DB ★ |
-| **資料提供** |
-| 文字提供 | | UI | | | DB ★ |
-| 網址提供 | | UI | | | DB ★ |
-| 圖片、檔案提供 | | UI | | | DB ★ |
-| **測驗遊戲** |
-| 遊戲過程 | ○ | UI ★ | | | |
-| 遊戲結果 | | UI ★ | | | |
-| **管理系統** |
-| 更新關鍵字及資料 | | UI | ★ | ○ | DB |
-| 準確度回報列表 | | UI ★ | ○ | | DB |
-| 資料提供回報列表 | | UI | | | DB ★ |
-| **系統測試** | ★ | | | | |
-
-### 系統文件分工
-
-| 工作項目 | 曾詰淩 | 余政佑 | 徐子崴 | 黃予岑 | 梁瑜芳 |
-|---|:---:|:---:|:---:|:---:|:---:|
-| **第一章 系統描述** |
-| 發展背景與動機 | ★ | | | | |
-| 系統發展目的 | ★ | | | | |
-| 系統範圍 | ★ | | | | |
-| 背景知識 | ★ | | ○ | ○ | |
-| 系統限制（可行性分析） | ★ | | | | |
-| **第二章 軟體需求規格** |
-| User Story | ★ | | | | |
-| 結構化系統分析 | ★ | | | | |
-| **第三章 軟體設計規格** |
-| 資料庫設計 | | | | | ★ |
-| 介面設計 | ★ | ○ | | | |
+| **曾詰淩**（組長） | 系統文件撰寫、介面設計、系統測試 |
+| **余政佑** | 全站 UI 設計、常見手法與宣導專區、詐騙測驗遊戲 |
+| **徐子崴** | 防詐檢測核心（文字／網址／圖片檔案）、檢測結果、後台資料集更新 |
+| **黃予岑** | 防詐檢測核心（文字／網址／圖片檔案）、檢測結果、AI 模型與背景知識 |
+| **梁瑜芳** | 資料庫設計與全站 DB 串接、統計圖表、資料提供與回報列表 |
 
 ---
 
