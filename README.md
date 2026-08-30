@@ -18,12 +18,12 @@
 <td align="center" valign="top">
 <img src="https://raw.githubusercontent.com/Liao-s-Research-Lab/fraud-radar/main/docs/screenshots/home-desktop.png" alt="網頁版首頁" width="644">
 <br><sub><b>網頁版</b> · 貼文字／網址／截圖即時偵測</sub><br><br>
-<a href="https://mintguess-fraud-radar.hf.space"><img src="https://img.shields.io/badge/🌐_線上試用-→-1F6FEB?style=for-the-badge" alt="線上試用"></a>
+<a href="https://mintguess-fraud-radar.hf.space"><img src="https://img.shields.io/badge/%F0%9F%8C%90_%E7%B7%9A%E4%B8%8A%E8%A9%A6%E7%94%A8-%E2%86%92-1F6FEB?style=for-the-badge" alt="線上試用"></a>
 </td>
 <td align="center" valign="top">
 <img src="https://raw.githubusercontent.com/Liao-s-Research-Lab/fraud-radar/main/docs/screenshots/app-home.png" alt="Android App 首頁" width="190">
 <br><sub><b>Android App</b> · 懸浮一鍵偵測</sub><br><br>
-<a href="#-手機-app-安裝android"><img src="https://img.shields.io/badge/📱_安裝_App-→-F97316?style=for-the-badge" alt="安裝 Android App"></a>
+<a href="#-手機-app-安裝android"><img src="https://img.shields.io/badge/%F0%9F%93%B1_%E5%AE%89%E8%A3%9D_App-%E2%86%92-F97316?style=for-the-badge" alt="安裝 Android App"></a>
 </td>
 </tr>
 </table>
