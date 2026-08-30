@@ -13,6 +13,10 @@
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 
+
+**[線上試用 →](https://mintguess-fraud-radar.hf.space)**
+
+<img src="https://raw.githubusercontent.com/Liao-s-Research-Lab/fraud-radar/main/docs/screenshots/home-desktop.png" alt="騙局雷達首頁" width="900">
 </div>
 
 ---
@@ -130,15 +134,35 @@ npm run dev     # 同時啟動 前端(5173) + Next.js(3000) + Flask(5000)
 
 啟動後開啟 **http://localhost:5173** 即可使用。
 
-手機 App（Android）只想直接安裝的話，裝現成的 release APK 即可（不需啟動任何本機服務）：
+---
+
+## 📱 手機 App 安裝（Android）
+
+> **只想用 App、不想架環境的話，看這節就夠了 —— 裝一個 APK，不需要啟動任何本機服務。**
+
+App 與網頁版共用同一組後端與 Firebase，並多了網頁做不到的**懸浮氣泡一鍵偵測**：以原生
+`MediaProjection` 截取當前整個手機畫面直接上傳偵測，結果浮層顯示，不用離開 LINE／訊息 App。
+
+### 方式一：安裝現成的 APK（最快）
 
 ```bash
 adb install -r C:\mobile\android\app\build\outputs\apk\release\app-release.apk
 ```
 
-要改 App 程式則 `cd C:\mobile && npx expo run:android`，細節見 [mobile/README.md](mobile/README.md)。
+或把 `app-release.apk` 複製到手機上直接點開安裝（需先允許「安裝未知來源的應用程式」）。
 
----
+### 方式二：自己編譯／修改 App
+
+```bash
+cd C:\mobile
+npx expo run:android
+```
+
+完整說明（權限設定、SAF 檢測、打包流程）見 **[mobile/README.md](mobile/README.md)**。
+
+> **iPhone 使用者**：iOS 平台限制無法截取其他 App 的畫面，因此沒有懸浮偵測功能，請改用
+> [網頁版](https://mintguess-fraud-radar.hf.space)，功能完全相同。
+
 
 ## 📁 目錄結構
 
